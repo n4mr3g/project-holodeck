@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-const AnswerSection = ({question, answer}) => {
+const AnswerSection = ({question, answer} :) => {
+
 // const [answer, setAnswer] = useState("");
 // const [question, setQuestion] = useState("");
 

@@ -1,12 +1,8 @@
 //TODO: Controller functions
 
 const model = require('../models/openai.js');
-const SSE = require('express-sse');
-const { Readable } = require('stream');
 const http = require('http');
-// const { SseStream } = require('ssestream');
 
-// const model = require('../models/hf.js');
 
 // There's going to be the following variables: danger, luck, difficulty. They'll determine the following:
 // Every certain amount of turns, include the following in the prompt:
@@ -98,146 +94,52 @@ read: allows you to read books or documents
 examine: allows you to examine objects or locations in detail
 `
 
+
 async function sendAiPrompt(req, res) {
-  console.log('req.body: ', req.body);
+
   let userPrompt = await req.body.prompt;
   console.log('userPrompt: ', userPrompt);
-
   try {
-    // Create a new Socket.IO instance
-    let io = req.app.get('socketio');
-
-    // Emit a "start" event to the client
-    io.emit('start', { prompt: userPrompt });
-
-    // First we send the initial prompt to the AI
-    const completion = await model.dmAi.createChatCompletion({
-      model: 'gpt-3.5-turbo',
-      temperature: 0,
-      top_p: 1,
-      n: 1,
-      messages: [
-        {
-          role: 'assistant',
-          content: 'Respond with a 3-word sentence.'
-        },
-        {
-          role: 'user',
-          content: userPrompt,
-        }
-      ],
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        // object: 'chat.completion',
+        messages: [
+          {
+            role: 'assistant',
+            // This will be replaced by initialPrompt, to give the AI a starting point.
+            // For testing purposes, we'll just use a simple prompt.
+            content: 'Respond with a random word.'
+            // content: initialPrompt,
+          },
+          {
+            // This is what the user types in:
+            role: 'user',
+            content: userPrompt,
+          }
+        ],
+        // max_tokens: 64,
+        model: 'gpt-3.5-turbo',
+        temperature: 0,
+        top_p: 1,
+        n: 1,
+        // Streaming to frontend is not working yet, so I'll just send the response as JSON for now.
+        // stream: true,
+        stream: false,
+      }),
     });
-
-    // Emit each response from OpenAI to the client
-    for (const message of completion.choices[0].message) {
-      if (message.role === 'assistant') {
-        io.emit('response', { content: message.content });
-      }
-    }
-
-    // Emit a "done" event to the client
-    io.emit('done');
-
-    res.send({ message: 'Stream started' });
-  } catch (err) {
-    console.log(err);
-    res.send(err);
+    const responseData = await response.json();
+    console.log('data: ', responseData.choices[0].message.content);
+    res.status(200).json(responseData);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'An error occurred' });
   }
 }
-
-
-// async function sendAiPrompt(req, res) {
-
-//   let sse = new SSE();
-//   sse.init(req, res);
-//   let userPrompt = await req.body.prompt;
-//   console.log('userPrompt: ', userPrompt);
-//   try {
-//     // First we send the initial prompt to the AI
-//     const response = await fetch('https://api.openai.com/v1/chat/completions', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-//       },
-//       body: JSON.stringify({
-//         // object: 'chat.completion',
-//         messages: [
-//           {
-//             role: 'assistant',
-//             content: 'Respond with a 3 word sentence.'
-//             // content: initialPrompt,
-//           },
-//           {
-//             role: 'user',
-//             content: userPrompt,
-//           }
-//         ],
-//         // max_tokens: 64,
-//         model: 'gpt-3.5-turbo',
-//         temperature: 0,
-//         top_p: 1,
-//         n: 1,
-//         stream: true,
-//         // logprobs: null,
-//       }),
-//     });
-
-
-//     // Then we stream the response back to the client.
-//     // This is a server-sent event (SSE) stream.
-//     // See: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
-
-//     // We set the headers to let the client know to expect an SSE stream.
-//     res.setHeader('Content-Type', 'text/event-stream');
-//     res.setHeader('Cache-Control', 'no-cache');
-//     res.setHeader('Connection', 'keep-alive');
-//     res.flushHeaders();
-
-
-//     const reader = response.body.getReader();
-//     const decoder = new TextDecoder("utf-8");
-//     // resultText = '';
-
-//     // This loop reads data from the response stream.
-//     while (true) {
-//       const chunk = await reader.read();
-//       const { value, done } = chunk;
-//       if (done) break;
-//       const decodedValue = decoder.decode(value);
-//       const lines = decodedValue.split('\n');
-//       const parsedLines = lines
-//         .map(line => line.replace(/^data: /, '').trim())
-//         .filter(line => line.length > 0 && line !== '[DONE]')
-//         .map(line => JSON.parse(line));
-//       for (const parsedLine of parsedLines) {
-//         const { choices } = parsedLine;
-//         const { delta } = choices[0];
-//         const { content } = delta;
-//         if (content) {
-//           // Send each chunk of content back to the client
-//           console.log(content);
-//           res.write(`data: ${content}\n\n`);
-//           res.flush();
-//           // res.write(`${content}\n\n`);
-//           // res.write(`data: ${content}\n\n`);
-//           /*
-//           The \n\n part is added after each chunk of content in the event stream format
-//           to comply with the event stream specification. In the event stream format,
-//           each event is separated by a double newline (\n\n) to indicate the end of an event.
-//           */
-//         }
-//       }
-//     }
-//     // Signal the end of the stream
-//     res.write('data: [DONE]\n\n');
-//     // res.write('[DONE]\n\n');
-//     // res.end();
-//   } catch (error) {
-//     console.error('Error:', error);
-//     res.status(500).json({ error: 'An error occurred' });
-//   }
-// }
 
 // Player ${player.id}: ${prompt}`;
 
