@@ -1,0 +1,10 @@
+class GameSession {
+  constructor(options) {
+    Object.assign(this, options);
+  }
+}
+
+
+//Options:
+// player: Player
+// 

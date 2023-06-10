@@ -1,8 +1,12 @@
-// const controller = require('./controllers/controller');
+//TODO: Routes
+
+const controller = require('./controllers/controller');
 const router = require('express').Router();
 
 
-// router.get('/', controller.get);
+// router.get('/', controller.getSomething);
+// router.get('/something', controller.getSomething);
+router.post('/send_ai_prompt', controller.sendAiPrompt);
 // router.post('/', controller.post);
 
 
