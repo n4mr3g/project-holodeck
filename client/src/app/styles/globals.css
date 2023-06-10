@@ -103,22 +103,6 @@ button {
   border: 1px solid #343536;
 }
 
-/*
-.answer-section {
-  margin: 30px 0;
-  position: relative;
-}
-
-.answer-section .question {
-  background-color: var(--accent-color);
-  padding: 20px;
-}
-
-.answer-section .answer {
-  background-color: #343536;
-  padding: 20px;
-} */
-
 .chat-container {
   /* overflow: scroll; */
   max-height: 500px;
@@ -155,12 +139,6 @@ button {
 
 .chat-bubble.bot {
   background-color: darkred;
-}
-
-.chat-bubble.loading {
-  content: "";
-  background: none;
-  /* TODO: Fix this */
 }
 
 .copy-icon:hover {
