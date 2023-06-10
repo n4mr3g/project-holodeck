@@ -1,8 +1,4 @@
-//TODO: Controller functions
-
 const model = require('../models/openai.js');
-const http = require('http');
-
 
 // There's going to be the following variables: danger, luck, difficulty. They'll determine the following:
 // Every certain amount of turns, include the following in the prompt:
