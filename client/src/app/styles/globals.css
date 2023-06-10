@@ -1,19 +1,25 @@
-@import url("https://fonts.googleapis.com/css2?family=Silkscreen&display=swap");
-
+/* Global variables */
 :root {
   --accent-color: #ca228c;
+  --background-color: #1d1e20;
 }
 
+/* Silkscreen font (for logo)*/
+@import url("https://fonts.googleapis.com/css2?family=Silkscreen&display=swap");
 
+/* Loader animation */
+@import "loader.css";
+
+/* CSS reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* scroll-behavior: smooth; */
 }
 
 body {
-  /* font-family: "Silkscreen", sans-serif; */
-  background: #1d1e20;
+  background: var(--background-color);
   color: #dadadb;
   max-width: 800px;
   margin: 0 auto;
@@ -49,7 +55,7 @@ body {
   margin: 30px 0;
 }
 
-textarea,
+input[type="text"],
 button {
   width: 100%;
   border-radius: 5px;
@@ -60,7 +66,6 @@ button {
   margin-bottom: 20px;
   padding: 20px;
   font-size: 1rem;
-  /* font-family: "Silkscreen", sans-serif; */
   outline: none;
   background-color: #343536;
   color: #dadadb;
@@ -98,11 +103,7 @@ button {
   border: 1px solid #343536;
 }
 
-/* .answer-container {
-  overflow: scroll;
-  max-height: 500px;
-} */
-
+/*
 .answer-section {
   margin: 30px 0;
   position: relative;
@@ -116,27 +117,56 @@ button {
 .answer-section .answer {
   background-color: #343536;
   padding: 20px;
+} */
+
+.chat-container {
+  /* overflow: scroll; */
+  max-height: 500px;
+
 }
 
-.copy-icon {
-  position: absolute;
-  background-color: #000000;
-  width: 50px;
-  height: 50px;
+.chat-container .chat {
+  min-height: 500px;
+  background-color: #343536;
+  padding: 20px;
+  margin-bottom: 20px;
   border-radius: 5px;
+  position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  bottom: -10px;
-  right: -10px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: all 0.5s ease-in-out;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.chat-bubble {
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  position: relative;
+  display: inline-block;
+  min-width: 11%;
+  max-width: 80%;
+}
+
+.chat-bubble.user {
+  background-color: var(--accent-color);
+  align-self: flex-end;
+}
+
+.chat-bubble.bot {
+  background-color: darkred;
+}
+
+.chat-bubble.loading {
+  content: "";
+  background: none;
+  /* TODO: Fix this */
 }
 
 .copy-icon:hover {
   background-color: var(--accent-color);
 }
+
 .header-section h1:hover {
   color: var(--accent-color);
 }

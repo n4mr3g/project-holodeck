@@ -107,7 +107,6 @@ async function sendAiPrompt(req, res) {
         'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        // object: 'chat.completion',
         messages: [
           {
             role: 'assistant',
@@ -142,12 +141,6 @@ async function sendAiPrompt(req, res) {
 }
 
 // Player ${player.id}: ${prompt}`;
-
-// module.exports = {
-//   generatePrompt,
-//   initialPrompt,
-// }
-
 
 module.exports = {
   sendAiPrompt,

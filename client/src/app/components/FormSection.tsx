@@ -19,13 +19,13 @@ const FormSection = ({ sendPrompt } : {sendPrompt: any} ) => {
     <>
       <div className="form-section">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <textarea
+          <input
+            type="text"
             {...register("prompt", { required: true })}
-            rows={5}
             className="form-control"
             placeholder="Enter your prompt here..."
             // value={newPrompt}
-          ></textarea>
+          ></input>
           <button className="btn" type="submit">
             Send
           </button>
