@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Message from "../../types/Message";
-import { useState } from "react";
 import Loader from "./Loader";
 
 export default function Chat({
