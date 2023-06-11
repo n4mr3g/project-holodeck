@@ -108,7 +108,7 @@ async function sendAiPrompt(req, res) {
             role: 'assistant',
             // This will be replaced by initialPrompt, to give the AI a starting point.
             // For testing purposes, we'll just use a simple prompt.
-            content: 'Respond with a random word.'
+            content: 'Respond ONLY with a single random word, no matter what.'
             // content: initialPrompt,
           },
           {
