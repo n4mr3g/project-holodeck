@@ -10,6 +10,7 @@ export default function MyApp({ Component, pageProps }: any) {
           { name: "Play", href: "/play" },
         ]}
       />
+
       <Component {...pageProps} />
     </>
   );

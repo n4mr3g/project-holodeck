@@ -15,7 +15,8 @@ export default function Navigation({ navLinks }: NavigationProps) {
 
   return (
     <>
-      <header className="nav-header">
+
+
         <nav>
           {navLinks.map((link) => {
             const isActive = pathname == link.href;
@@ -32,7 +33,6 @@ export default function Navigation({ navLinks }: NavigationProps) {
             );
           })}
         </nav>
-      </header>
     </>
   );
 }
