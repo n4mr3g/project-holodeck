@@ -16,8 +16,6 @@ app.use((req, res, next) => {
 });
 
 // middleware
-
-
 app.use(express.json());
 app.use(router);
 
