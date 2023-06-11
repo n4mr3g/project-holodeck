@@ -33,7 +33,7 @@ export default function About() {
           my GitHub
         </a>{" "}
         or{" "}
-        <a href="https://www.linkedin.com/in/germanpiccioni/" target="_blank">
+        <a href="https://www.linkedin.com/in/german-piccioni/" target="_blank">
           my LinkedIn
         </a>{" "}
         profiles.
