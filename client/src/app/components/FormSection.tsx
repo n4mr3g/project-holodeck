@@ -1,13 +1,11 @@
-"use client";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { useState } from "react";
 
-const FormSection = ({ sendPrompt } : {sendPrompt: any} ) => {
+const FormSection = ({ sendPrompt }: { sendPrompt: any }) => {
   const { register, handleSubmit, reset } = useForm<FieldValues>();
 
   const [newPrompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
-
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     // sendQuestion(data.prompt);

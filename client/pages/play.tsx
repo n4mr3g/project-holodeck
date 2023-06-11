@@ -1,13 +1,13 @@
-"use client";
+// "use client";
 import { FieldValues, set } from "react-hook-form";
 import { useState, useEffect } from "react";
-import Message from "../types/Message";
+import Message from "@/types/Message";
 import Image from "next/image";
-import styles from "./styles/page.module.css";
-import FormSection from "./components/FormSection";
-import Chat from "./components/Chat";
+import styles from "@/styles/page.module.css";
+import FormSection from "@/components/FormSection";
+import Chat from "@/components/Chat";
 
-export default function App() {
+export default function Play() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [msgLoading, setMsgLoading] = useState(false);
 
@@ -38,7 +38,7 @@ export default function App() {
   }
 
   return (
-    <main>
+    <div>
       <div className="header-section">
         <h1>Project Holodeck</h1>
         <p>Let me create a virtual world for you.</p>
@@ -46,6 +46,6 @@ export default function App() {
       <Chat messages={messages} msgLoading={msgLoading} />
       {/* <AnswerSection question={questions[0]} answer={responses[0]} /> */}
       <FormSection sendPrompt={sendPrompt} />
-    </main>
+    </div>
   );
 }
