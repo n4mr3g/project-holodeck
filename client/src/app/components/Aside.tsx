@@ -1,24 +1,17 @@
+//TODO: Create Aside component
+
 import React, { useRef, useEffect } from "react";
 import Message from "@/types/Message";
 import Loader from "./Loader";
-import FormSection from "./FormSection";
 
-export default function Chat({
-  messages,
-  msgLoading,
-  sendPrompt,
+export default function Aside({
+
 }: {
-  messages: Message[];
-  msgLoading: boolean;
-  sendPrompt: any;
+
 }) {
-  const chatContainerRef = useRef<HTMLDivElement>(null);
-  const chatSectionRef = useRef<HTMLDivElement>(null);
-  const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    //TODO: Delete unnecessary refs.
-    // Scroll to bottom when new messages are added.
+    // Scroll to bottom when new messages are added
     const scrollToBottom = () => {
       console.log("triggered");
       const container = chatContainerRef.current;
