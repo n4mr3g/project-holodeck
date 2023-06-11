@@ -21,14 +21,47 @@
 body {
   background: var(--background-color);
   color: #dadadb;
-  max-width: 800px;
-  margin: 0 auto;
+  /* max-width: 800px; */
+  /* margin: 0 auto; */
 }
 
 @media screen and (max-width: 800px) {
   body {
     max-width: 100%;
     padding: 0 20px;
+  }
+}
+
+.nav-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  align-items: center;
+  height: 50px;
+  padding: 30px;
+  box-shadow: 0 -6px 10px 5px white;
+}
+
+nav {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  align-items: center;
+  padding: 20px 0;
+  & a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 10px 20px;
+    /* border-radius: 5px; */
+    transition: all 0.5s ease-in-out;
+    &:hover {
+      background-color: var(--accent-color);
+    }
+    &.active {
+      background-color: var(--accent-color);
+    }
   }
 }
 
@@ -106,7 +139,6 @@ button {
 .chat-container {
   /* overflow: scroll; */
   max-height: 500px;
-
 }
 
 .chat-container .chat {

@@ -10,6 +10,9 @@ import Chat from "@/components/Chat";
 export default function Play() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [msgLoading, setMsgLoading] = useState(false);
+  // TODO: cache for when the user leaves the page and comes back
+  
+
 
   async function sendPrompt(data: FieldValues): Promise<void> {
     const userMessage = new Message(data.prompt, "User");
@@ -39,10 +42,6 @@ export default function Play() {
 
   return (
     <div>
-      <div className="header-section">
-        <h1>Project Holodeck</h1>
-        <p>Let me create a virtual world for you.</p>
-      </div>
       <Chat messages={messages} msgLoading={msgLoading} />
       {/* <AnswerSection question={questions[0]} answer={responses[0]} /> */}
       <FormSection sendPrompt={sendPrompt} />

@@ -1,5 +1,5 @@
-import { usePathname } from 'next/navigation'
-import Link from 'next/link'
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 interface NavLink {
   name: string;
@@ -11,24 +11,28 @@ interface NavigationProps {
 }
 
 export default function Navigation({ navLinks }: NavigationProps) {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <>
-      {navLinks.map((link) => {
-        const isActive = pathname && pathname.startsWith(link.href)
+      <header className="nav-header">
+        <nav>
+          {navLinks.map((link) => {
+            const isActive = pathname == link.href;
+            // const isActive = pathname && pathname.startsWith(link.href); // for subpages
 
-        return (
-          <Link
-            href={link.href}
-            key={link.name}
-          >
-            <a className={isActive ? 'text-blue' : 'text-black'}>
-              {link.name}
-            </a>
-          </Link>
-        )
-      })}
+            return (
+              <Link
+                href={link.href}
+                key={link.name}
+                className={isActive ? "active" : ""}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+        </nav>
+      </header>
     </>
-  )
+  );
 }
