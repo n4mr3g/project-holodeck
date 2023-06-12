@@ -1,8 +1,6 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Dropdown from 'rc-dropdown';
-
-
+import BurgerMenu from "./BurgerMenu";
 interface NavLink {
   name: string;
   href: string;
@@ -17,24 +15,23 @@ export default function Navigation({ navLinks }: NavigationProps) {
 
   return (
     <>
+      <nav>
+        {navLinks.map((link) => {
+          const isActive = pathname == link.href;
+          // const isActive = pathname && pathname.startsWith(link.href); // for subpages
 
-
-        <nav>
-          {navLinks.map((link) => {
-            const isActive = pathname == link.href;
-            // const isActive = pathname && pathname.startsWith(link.href); // for subpages
-
-            return (
-              <Link
-                href={link.href}
-                key={link.name}
-                className={isActive ? "active" : ""}
-              >
-                {link.name}
-              </Link>
-            );
-          })}
-        </nav>
+          return (
+            <Link
+              href={link.href}
+              key={link.name}
+              className={isActive ? "active" : ""}
+            >
+              {link.name}
+            </Link>
+          );
+        })}
+        <BurgerMenu />
+      </nav>
     </>
   );
 }
