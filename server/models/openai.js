@@ -9,9 +9,7 @@ const configuration = new Configuration({
 });
 
 const dmAi = new OpenAIApi(configuration);
-const assistantAi = new OpenAIApi(configuration);
 
 module.exports = {
   dmAi,
-  assistantAi,
 }

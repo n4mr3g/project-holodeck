@@ -15,9 +15,9 @@ const initialPrompt = process.env.INITIAL_PROMPT;
 
 async function sendAiPrompt(req, res) {
 
+  try {
   let userPrompt = await req.body.prompt;
   console.log('userPrompt: ', userPrompt);
-  try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
