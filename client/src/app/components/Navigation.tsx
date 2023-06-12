@@ -19,25 +19,25 @@ export default function Navigation({ navLinks }: NavigationProps) {
     <>
       <nav>
         <div className="left-links">
-        {navLinks.map((link) => {
-          const isActive = pathname == link.href;
-          // const isActive = pathname && pathname.startsWith(link.href); // for subpages
+          {navLinks.map((link) => {
+            const isActive = pathname == link.href;
+            // const isActive = pathname && pathname.startsWith(link.href); // for subpages
 
-          return (
-            <Link
-              href={link.href}
-              key={link.name}
-              className={isActive ? "active" : ""}
-            >
-              {link.name}
-            </Link>
-          );
-        })}
+            return (
+              <Link
+                href={link.href}
+                key={link.name}
+                className={isActive ? "active" : ""}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
         </div>
         <div className="right-links">
-        <UserButton afterSignOutUrl="/"/>
-        <BurgerMenu navLinks={navLinks} />
-          </div>
+          <UserButton afterSignOutUrl="/" />
+          <BurgerMenu navLinks={navLinks} />
+        </div>
       </nav>
     </>
   );

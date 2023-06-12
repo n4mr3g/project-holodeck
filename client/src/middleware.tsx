@@ -3,6 +3,6 @@ import { authMiddleware } from "@clerk/nextjs";
 export default authMiddleware();
 
 export const config = {
-  matcher: ["/play"],
-  // matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+  // matcher: ["/play"],
+  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };

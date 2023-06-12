@@ -5,12 +5,12 @@ export default function CardItem({ card }: { card: Card }) {
   return (
     <a href={card.link} target="_blank" rel="noopener noreferrer">
       <div className="card-container">
-        <div className="card-item">
+        <div className="card-item" style={{ backgroundImage: `url(${card.image})` }}>
           <h2>{card.title}</h2>
           <p>{card.description}</p>
-          <div className="card-image">
+          {/* <div className="card-image">
             <img src={card.image} alt="card" />
-          </div>
+          </div> */}
         </div>
       </div>
     </a>
