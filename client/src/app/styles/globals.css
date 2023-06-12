@@ -10,9 +10,6 @@
 /* Loader animation */
 @import "loader.css";
 
-/* Typing animation */
-@import "typing-demo.css";
-
 /* CSS reset */
 * {
   margin: 0;

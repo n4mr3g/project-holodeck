@@ -1,5 +1,6 @@
 import CardItem from "./CardItem";
 import Card from "@/types/Card";
+import "@/styles/cards.css";
 
 export default function CardsSection() {
   const cards: Card[] = [
@@ -28,9 +29,17 @@ export default function CardsSection() {
 
   return (
     <div className="cards-section">
-      {cards.map((card: Card) => {
-        <CardItem card={card} />;
-      })}
+      <CardItem card={cards[0]} />
+      <CardItem card={cards[1]} />
+      <CardItem card={cards[2]} />
     </div>
   );
+
+  // return (
+  //   <div className="cards-section">
+  //     {cards.map((card: Card) => {
+  //       <CardItem card={card} />;
+  //     })}
+  //   </div>
+  // );
 }

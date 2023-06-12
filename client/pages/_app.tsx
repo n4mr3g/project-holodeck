@@ -2,6 +2,8 @@ import Navigation from "@/app/components/Navigation";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { AppProps } from "next/app";
 import "@/styles/globals.css";
+/* Typing animation */
+import "@/styles/typing-demo.css";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
