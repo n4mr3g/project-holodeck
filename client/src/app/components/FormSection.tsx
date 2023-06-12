@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
-import { use, useRef } from "react";
+import { useRef } from "react";
 
 const FormSection = ({ sendPrompt }: { sendPrompt: any }) => {
   const { register, handleSubmit, reset } = useForm<FieldValues>();

@@ -1,4 +1,4 @@
-const controller = require('./controllers/controller');
+const controller = require('./controllers/openai.controller');
 const router = require('express').Router();
 
 router.post('/send_ai_prompt', controller.sendAiPrompt);

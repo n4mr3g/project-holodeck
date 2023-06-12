@@ -1,5 +1,6 @@
 require('dotenv').config();
-const model = require('../models/openai.js');
+const OpenAI = require('../models/openai.js');
+const Message = require('../models/messages.model.js');
 
 
 // There's going to be the following variables: danger, luck, difficulty. They'll determine the following:
@@ -10,14 +11,13 @@ const model = require('../models/openai.js');
 // A riddle
 // A trap
 
-
 const initialPrompt = process.env.INITIAL_PROMPT;
 
 async function sendAiPrompt(req, res) {
 
   try {
-  let userPrompt = await req.body.prompt;
-  console.log('userPrompt: ', userPrompt);
+    let userPrompt = await req.body.prompt;
+    console.log('userPrompt: ', userPrompt);
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -52,11 +52,32 @@ async function sendAiPrompt(req, res) {
     const responseData = await response.json();
     console.log('data: ', responseData.choices[0].message.content);
     res.status(200).json(responseData);
+    saveMessage(userPrompt);
+    saveMessage({
+      content: responseData.choices[0].message.content,
+      userId: '',
+      author: '',
+      role: 'assistant',
+    });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'An error occurred' });
   }
 }
+
+async function saveMessage(message) {
+  const newMessage = Message.create({
+    content: message.content,
+    userId: message.user,
+    author: message.author,
+    time: Date.now(),
+    role: message.role,
+  });
+  await newMessage.save()
+    .then((message) => res.json(message))
+    .catch(err => res.status(400).json('Error: ' + err));
+}
+
 
 // Player ${player.id}: ${prompt}`;
 
