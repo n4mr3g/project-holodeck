@@ -1,8 +1,10 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import BurgerMenu from "./BurgerMenu";
-import { UserButton } from "@clerk/nextjs";
+import { useUser, useAuth, UserButton, SignInButton } from "@clerk/nextjs";
+import "@/styles/sign-in.css";
 
+//TODO: How to use subpages with arguments?
 interface NavLink {
   name: string;
   href: string;
@@ -14,7 +16,12 @@ interface NavigationProps {
 
 export default function Navigation({ navLinks }: NavigationProps) {
   const pathname = usePathname();
-
+  const { isLoaded, userId, sessionId, getToken } = useAuth();
+  const { isSignedIn, user } = useUser();
+  // let user;
+  // (async function getUserData() {
+  //   user = await currentUser();
+  // })();
   return (
     <>
       <nav>
@@ -35,7 +42,18 @@ export default function Navigation({ navLinks }: NavigationProps) {
           })}
         </div>
         <div className="right-links">
-          <UserButton afterSignOutUrl="/" />
+          {!userId ? (
+            <SignInButton mode="modal">
+              <Link href="#">Sign In</Link>
+            </SignInButton>
+          ) : (
+            <Link href="/profile" className="user-name">
+
+              <UserButton afterSignOutUrl="/" />
+              <span>{user?.username}</span>
+            </Link>
+          )}
+
           <BurgerMenu navLinks={navLinks} />
         </div>
       </nav>

@@ -1,4 +1,6 @@
 import { slide as Menu } from "react-burger-menu";
+import { UserButton } from "@clerk/nextjs";
+
 import "@/styles/burger-menu.css";
 
 export default function BurgerMenu() {

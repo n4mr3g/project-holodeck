@@ -24,8 +24,12 @@ body {
   background: var(--background-color);
   color: #dadadb;
   margin: 0 auto;
-  /* margin-bottom: 200px; */
-  font-family: "Courier New", Courier, monospace;
+  margin-top: 50px;
+  font-family: "Silkscreen", sans-serif;
+}
+
+main {
+  padding: 30px;
 }
 
 @media screen and (max-width: 800px) {
@@ -36,7 +40,9 @@ body {
 }
 
 nav {
-  position: sticky;
+  position: fixed;
+  top: 0;
+  z-index: 1;
   width: 100%;
   box-shadow: 0 1px 15px 5px black;
   font-family: "Silkscreen", sans-serif;
@@ -69,6 +75,7 @@ nav .left-links {
   display: flex;
   flex-direction: row;
 }
+
 nav .right-links {
   display: flex;
   flex-direction: row;
@@ -83,12 +90,13 @@ nav .right-links {
 }
 
 .header-section h1 {
-  font-family: "Silkscreen", sans-serif;
   cursor: default;
   transition: color 0.3s ease-in-out;
   font-size: 3.5rem;
   font-weight: 700;
+  margin-top: 80px;
   margin-bottom: 50px;
+  text-shadow: 4px 4px 4px var(--accent-color);
 }
 
 .header-section p {
@@ -136,6 +144,7 @@ input[type="text"] {
 }
 
 .form-control {
+  font-family: "Silkscreen", sans-serif;
   padding: 20px;
   font-size: 1rem;
   outline: none;
@@ -162,7 +171,6 @@ input[type="text"] {
 .btn:hover {
   background-color: var(--accent-color);
   color: #000000;
-  font-family: "Silkscreen", sans-serif;
 }
 
 .hr-line {
