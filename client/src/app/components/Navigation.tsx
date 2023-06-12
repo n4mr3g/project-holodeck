@@ -1,6 +1,8 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import BurgerMenu from "./BurgerMenu";
+import { UserButton } from "@clerk/nextjs";
+
 interface NavLink {
   name: string;
   href: string;
@@ -16,6 +18,7 @@ export default function Navigation({ navLinks }: NavigationProps) {
   return (
     <>
       <nav>
+        <div className="left-links">
         {navLinks.map((link) => {
           const isActive = pathname == link.href;
           // const isActive = pathname && pathname.startsWith(link.href); // for subpages
@@ -30,7 +33,11 @@ export default function Navigation({ navLinks }: NavigationProps) {
             </Link>
           );
         })}
-        <BurgerMenu />
+        </div>
+        <div className="right-links">
+        <UserButton afterSignOutUrl="/"/>
+        <BurgerMenu navLinks={navLinks} />
+          </div>
       </nav>
     </>
   );

@@ -13,7 +13,6 @@
 /* Typing animation */
 @import "typing-demo.css";
 
-
 /* CSS reset */
 * {
   margin: 0;
@@ -45,6 +44,7 @@ nav {
   font-family: "Silkscreen", sans-serif;
   height: 50px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   background-color: #343536;
   & a {
@@ -65,6 +65,16 @@ nav {
       color: black;
     }
   }
+}
+
+nav .left-links {
+  display: flex;
+  flex-direction: row;
+}
+nav .right-links {
+  display: flex;
+  flex-direction: row;
+  margin-right: 100px;
 }
 
 .header-section {
@@ -207,6 +217,7 @@ input[type="text"] {
   max-width: 100%;
   overflow: wrap;
   word-wrap: break-word;
+  line-height: 1.4;
 }
 
 a {
@@ -219,10 +230,19 @@ a {
 .chat-bubble.user {
   color: #000000;
   background-color: var(--accent-color);
+  &:before {
+    color: white;
+    content: "You say:";
+  }
 }
 
 .chat-bubble.bot {
-  background-color: darkred;
+  background-color: aquamarine;
+  color: #000000;
+  &:before {
+    color: white;
+    content: "🤖";
+  }
 }
 
 a:hover {
