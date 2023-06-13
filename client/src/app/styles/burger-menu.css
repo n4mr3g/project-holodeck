@@ -1,6 +1,8 @@
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: fixed;
+  /* z-index: 99999; */
+  /* position: absolute; */
   width: 26px;
   height: 20px;
   right: 36px;
@@ -26,11 +28,24 @@
 .bm-cross-button {
   height: 24px;
   width: 24px;
+  scale: 1.5;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    /* transform: rotate(180deg); */
+    filter: invert(100%);
+    background-color: #35dd73;
+  }
 }
 
 /* Color/shape of close button cross */
 .bm-cross {
+  z-index: 3;
+  transition: all 0.2s ease-in-out;
   background: #bdc3c7;
+  &:hover {
+    transform: rotate(180deg);
+  }
 }
 
 /*
@@ -39,11 +54,16 @@ Note: Beware of modifying this element as it can break the animations - you shou
 */
 .bm-menu-wrap {
   position: fixed;
+  top: 0;
   height: 100%;
 }
 
 /* General sidebar styles */
 .bm-menu {
+  /* height: 100vh; */
+  /* position: absolute; */
+  right: 0;
+  top: 0;
   background: #373a47;
   /* padding: 1em 1em 0; */
   font-size: 1.15em;
@@ -57,8 +77,10 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* Wrapper for item list */
 .bm-item-list {
   display: flex;
+  height: 100%;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
   color: #b8b7ad;
   padding: 0.8em;
 }
@@ -66,11 +88,12 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* Individual item */
 .bm-item {
   display: inline-block;
-  height: fit-content;
+  height: min-content;
   width: 100%;
 }
 
 /* Styling of overlay */
 .bm-overlay {
+  top: 0;
   background: rgba(0, 0, 0, 0.3);
 }

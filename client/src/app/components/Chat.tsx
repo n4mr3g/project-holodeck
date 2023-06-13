@@ -16,31 +16,30 @@ export default function Chat({
   const chatSectionRef = useRef<HTMLDivElement>(null);
   const chatRef = useRef<HTMLDivElement>(null);
 
+  //TODO: Delete unnecessary refs.
+  // Scroll to bottom when new messages are added.
+  const scrollToBottom = () => {
+    const container = chatContainerRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+    const section = chatSectionRef.current;
+    if (section) {
+      section.scrollTop = section.scrollHeight;
+    }
+    const chat = chatRef.current;
+    if (chat) {
+      chat.scrollTop = chat.scrollHeight;
+    }
+  };
 
   useEffect(() => {
-    //TODO: Delete unnecessary refs.
-    // Scroll to bottom when new messages are added.
-    const scrollToBottom = () => {
-      const container = chatContainerRef.current;
-      if (container) {
-        container.scrollTop = container.scrollHeight;
-      }
-      const section = chatSectionRef.current;
-      if (section) {
-        section.scrollTop = section.scrollHeight;
-      }
-      const chat = chatRef.current;
-      if (chat) {
-        chat.scrollTop = chat.scrollHeight;
-      }
-    };
     scrollToBottom();
   }, [msgLoading]);
 
-
-
-
-
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
 
   return (
     <>
