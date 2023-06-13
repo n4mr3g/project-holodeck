@@ -7,6 +7,7 @@ import {
   RedirectToSignIn,
   useAuth,
   useUser,
+  SignIn,
 } from "@clerk/nextjs";
 import Chat from "@/components/Chat";
 
@@ -17,23 +18,24 @@ export default function Play() {
   const { user } = useUser();
 
   const sortMessages = (data: Message[]) => {
-    console.log('data:', data);
+    console.log("data:", data);
     return data.sort((a, b) => {
       a.time - b.time;
     });
   };
 
   function fetchMessages() {
-    console.log(userId);
     const requestOptions = {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
-
-    fetch(`http://localhost:3001/messages/${userId}`, requestOptions)
-      .then((data) => data.json())
-      .then((data) => sortMessages(data))
-      .then((data = []) => setMessages(data));
+    if (userId)
+    {
+      fetch(`http://localhost:3001/messages/${userId}`, requestOptions)
+        .then((data) => data.json())
+        .then((data) => sortMessages(data))
+        .then((data = []) => setMessages(data));
+    }
   }
 
   function sendPrompt(data: FieldValues): Promise<void> {
@@ -45,6 +47,7 @@ export default function Play() {
       body: JSON.stringify({
         prompt: data.prompt,
         userId: user?.id,
+        //TODO: sessions
         // session_id: sessionId,
       }),
     };
@@ -84,7 +87,7 @@ export default function Play() {
         />
       </SignedIn>
       <SignedOut>
-        <RedirectToSignIn mode="modal" redirectUrl="/play" />
+        <RedirectToSignIn mode="modal" />
       </SignedOut>
     </div>
   );

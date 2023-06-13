@@ -3,6 +3,7 @@ const { User } = require('../models/messages.model.js');
 
 
 async function getMessages(req, res) {
+  
   const userId = req.params.userId;
   if (!userId) {
     return;
