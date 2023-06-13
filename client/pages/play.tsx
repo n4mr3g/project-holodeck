@@ -16,16 +16,38 @@ export default function Play() {
   const { isLoaded, userId, sessionId, getToken } = useAuth();
   const { user } = useUser();
 
-  // TODO: cache for when the user leaves the page and comes back
-  async function sendPrompt(data: FieldValues): Promise<void> {
+  const sortMessages = (data: Message[]) => {
+    console.log('data:', data);
+    return data.sort((a, b) => {
+      a.time - b.time;
+    });
+  };
+
+  function fetchMessages() {
+    console.log(userId);
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+
+    fetch(`http://localhost:3001/messages/${userId}`, requestOptions)
+      .then((data) => data.json())
+      .then((data) => sortMessages(data))
+      .then((data = []) => setMessages(data));
+  }
+
+  function sendPrompt(data: FieldValues): Promise<void> {
     const userMessage = new Message(data.prompt, user?.username, user?.id);
     setMessages((prevMessages) => [...prevMessages, userMessage]);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt: data.prompt }),
+      body: JSON.stringify({
+        prompt: data.prompt,
+        userId: user?.id,
+        // session_id: sessionId,
+      }),
     };
-
     setMsgLoading(true);
     let botMessage: Message;
     fetch(`http://localhost:3001/send_ai_prompt`, requestOptions)
@@ -33,11 +55,11 @@ export default function Play() {
       .then((response) => {
         botMessage = new Message(
           response.choices[0].message.content,
-          "",
-          "",
+          "[AI]",
+          user?.id,
           true,
         );
-        console.log("Response in client: ", botMessage.content);
+        console.log("Response in client: ", response);
       })
       .then(() => {
         setMsgLoading(false);
@@ -47,6 +69,10 @@ export default function Play() {
         console.error("Error:", error);
       });
   }
+
+  useEffect(() => {
+    fetchMessages();
+  }, []);
 
   return (
     <div>

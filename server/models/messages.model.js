@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require('./db');
 
 const MessageSchema = new Schema({
   content: {
@@ -7,7 +7,7 @@ const MessageSchema = new Schema({
   },
   userId: {
     type: String,
-    required: true,
+    required: false,
   },
   author: {
     type: String,
@@ -21,6 +21,10 @@ const MessageSchema = new Schema({
     type: String,
     required: true,
   },
+  isFromAi: {
+    type: Boolean,
+    required: true,
+  },
 }, { timestamps: true });
 
 const UserSchema = new Schema({
@@ -28,10 +32,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  username: {
-    type: String,
-    required: true,
-  },
+  // username: {
+  //   type: String,
+  //   required: true,
+  // },
   messages: [MessageSchema],
 }, { timestamps: true });
 
