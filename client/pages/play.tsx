@@ -29,16 +29,13 @@ export default function Play() {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
-    if (userId)
-    {
+    if (userId) {
       fetch(`http://localhost:3001/messages/${userId}`, requestOptions)
         .then((data) => data.json())
         .then((data) => sortMessages(data))
         .then((data = []) => setMessages(data));
     }
   }
-
-
 
   function sendPrompt(data: FieldValues): Promise<void> {
     const userMessage = new Message(data.prompt, user?.username, user?.id);
@@ -74,6 +71,7 @@ export default function Play() {
         console.error("Error:", error);
       });
   }
+
 
   useEffect(() => {
     fetchMessages();

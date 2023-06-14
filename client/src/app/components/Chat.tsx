@@ -50,7 +50,7 @@ export default function Chat({
               <div
                 className={`chat-bubble ${message.isFromAi ? "bot" : "user"}`}
               >
-                <p className="chat-mesMessagesage">{message.content}</p>
+                <p className="chat-message">{message.content}</p>
               </div>
             ))}
             {msgLoading ? <Loader /> : null}

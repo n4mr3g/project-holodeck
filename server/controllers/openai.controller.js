@@ -1,7 +1,7 @@
 require('dotenv').config();
 const OpenAI = require('../models/openai.js');
 const { Message, User } = require('../models/messages.model.js');
-
+const msgsController = require('./messages.controller.js');
 
 // There's going to be the following variables: danger, luck, difficulty. They'll determine the following:
 // Every certain amount of turns, include the following in the prompt:
@@ -13,7 +13,7 @@ const { Message, User } = require('../models/messages.model.js');
 
 const initialPrompt = process.env.INITIAL_PROMPT;
 
-function getAssistantPrompt() {
+function getAssistantPrompt(userId) {
   return initialPrompt;
 }
 
