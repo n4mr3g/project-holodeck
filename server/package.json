@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@zeldafan0225/ai_horde": "^5.0.1",
+    "commitizen": "^4.3.0",
     "nodemon": "^2.0.22"
   }
 }
