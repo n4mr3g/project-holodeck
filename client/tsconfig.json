@@ -45,7 +45,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "pages/api/route.ts",
-    "pages/api/openai.js",
+    "pages/api/openai.ts",
     "./src/_app.tsx",
   ],
   "exclude": [

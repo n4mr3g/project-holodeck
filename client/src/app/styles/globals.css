@@ -275,7 +275,7 @@ footer p {
   /* margin-bottom: 400px; */
 }
 
-.chat-bubble.bot {
+.chat-bubble.system {
   background-color: aquamarine;
   color: #000000;
   &:before {

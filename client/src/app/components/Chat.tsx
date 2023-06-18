@@ -1,17 +1,17 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useChat } from "ai/react";
 import Message from "@/types/Message";
 import Loader from "./Loader";
-import FormSection from "./FormSection";
 
 export default function Chat({
-  messages,
   msgLoading,
   sendPrompt,
 }: {
-  messages: Message[];
   msgLoading: boolean;
   sendPrompt: any;
 }) {
+  const { messages, input, handleInputChange, handleSubmit } = useChat();
+
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const chatSectionRef = useRef<HTMLDivElement>(null);
   const chatRef = useRef<HTMLDivElement>(null);
@@ -45,17 +45,35 @@ export default function Chat({
     <>
       <div className="chat-container" ref={chatContainerRef}>
         <div className="chat-section" ref={chatSectionRef}>
+
+          {/* Chat */}
           <div className="chat" ref={chatRef}>
-            {messages.map((message: Message) => (
-              <div
-                className={`chat-bubble ${message.isFromAi ? "bot" : "user"}`}
-              >
-                <p className="chat-message">{message.content}</p>
+            {messages.map((m) => (
+              <div className={`chat-bubble ${m.role}`}>
+                <p className="chat-message">{m.content}</p>
               </div>
             ))}
             {msgLoading ? <Loader /> : null}
           </div>
-          <FormSection sendPrompt={sendPrompt} />
+
+          {/* Form */}
+          <div className="form-section">
+            <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                autoComplete="off"
+                autoFocus={true}
+                className="form-control"
+                placeholder="Enter your prompt here..."
+                value={input}
+                onChange={handleInputChange}
+              ></input>
+              <button className="btn" type="submit">
+                Send
+              </button>
+            </form>
+          </div>
+          
         </div>
       </div>
     </>

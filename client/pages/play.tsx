@@ -72,7 +72,6 @@ export default function Play() {
       });
   }
 
-
   useEffect(() => {
     fetchMessages();
   }, []);
