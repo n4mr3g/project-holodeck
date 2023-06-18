@@ -1,4 +1,12 @@
 {
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server for Project Holodeck",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
   "dependencies": {
     "@huggingface/inference": "^1.8.0",
     "@xenova/transformers": "^2.1.1",

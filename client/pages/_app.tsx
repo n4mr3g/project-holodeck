@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { dark } from "@clerk/themes";
 import type { AppProps } from "next/app";
 import "@/styles/globals.css";
+
 /* Typing animation */
 import "@/styles/typing-demo.css";
 import { ClerkProvider } from "@clerk/nextjs";
