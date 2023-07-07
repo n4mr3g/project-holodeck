@@ -19,8 +19,8 @@ export default function Play() {
 
   const sortMessages = (data: Message[]) => {
     console.log("data:", data);
-    return data.sort((a, b) => {
-      a.time - b.time;
+    return data.sort((a, b) =>{
+      return +a.time - +b.time;
     });
   };
 
@@ -37,8 +37,8 @@ export default function Play() {
     }
   }
 
-  function sendPrompt(data: FieldValues): Promise<void> {
-    const userMessage = new Message(data.prompt, user?.username, user?.id);
+  function sendPrompt(data: FieldValues) {
+    const userMessage = new Message(data.prompt, user?.username!, user?.id!);
     setMessages((prevMessages) => [...prevMessages, userMessage]);
     const requestOptions = {
       method: "POST",
@@ -58,7 +58,7 @@ export default function Play() {
         botMessage = new Message(
           response.choices[0].message.content,
           "[AI]",
-          user?.id,
+          user?.id!,
           true,
         );
         console.log("Response in client: ", response);
@@ -80,13 +80,15 @@ export default function Play() {
     <div>
       <SignedIn>
         <Chat
-          messages={messages}
+          // messages={messages}
           msgLoading={msgLoading}
           sendPrompt={sendPrompt}
         />
       </SignedIn>
       <SignedOut>
-        <RedirectToSignIn mode="modal" />
+        <RedirectToSignIn
+        // mode="modal" //does not exist?
+        />
       </SignedOut>
     </div>
   );

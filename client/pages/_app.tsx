@@ -9,7 +9,7 @@ import "@/styles/typing-demo.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const [sessions, setSessions] = useState<Session[]>([]);
+  // const [sessions, setSessions] = useState<Session[]>([]); //TODO: sessions
 
   // function fetchSessions() {
   //   const requestOptions = {
@@ -28,6 +28,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   // useEffect(() => {
   //   fetchSessions();
   // }, []);
+
   return (
     <>
       <ClerkProvider
