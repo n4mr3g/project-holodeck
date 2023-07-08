@@ -1,6 +1,7 @@
+"use client";
 import { slide as Menu } from "react-burger-menu";
 import { UserButton, SignInButton } from "@clerk/nextjs";
-import { Session } from "@/types/Session";
+import Session from "@/types/Session";
 import Link from "next/link";
 
 import "@/styles/burger-menu.css";
@@ -18,13 +19,13 @@ export default function BurgerMenu({
       <Menu right>
         {sessions ? (
           sessions.map((session) => (
-            <a
+            <Link
               key={session.id}
               className="menu-item"
               href={`/play/${session.id}`}
             >
-              {session.name}
-            </a>
+              {session.title}
+            </Link>
           ))
         ) : (
           <>

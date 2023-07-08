@@ -1,5 +1,5 @@
 //TODO: Create Aside component
-
+"use client";
 import React, { useRef, useEffect } from "react";
 import Message from "@/types/Message";
 import Loader from "./Loader";

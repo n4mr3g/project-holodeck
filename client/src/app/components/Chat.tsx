@@ -1,6 +1,6 @@
+"use client";
 import React, { useRef, useEffect, useState } from "react";
-import { useChat } from "ai/react";
-import Message from "@/types/Message";
+import { Message, useChat } from "ai/react";
 import Loader from "./Loader";
 
 export default function Chat({
@@ -10,7 +10,11 @@ export default function Chat({
   msgLoading: boolean;
   sendPrompt: any;
 }) {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
+    api: '/api/openai',
+
+  }
+  );
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const chatSectionRef = useRef<HTMLDivElement>(null);
@@ -73,7 +77,7 @@ export default function Chat({
               </button>
             </form>
           </div>
-          
+
         </div>
       </div>
     </>
