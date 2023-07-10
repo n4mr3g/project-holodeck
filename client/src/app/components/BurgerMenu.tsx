@@ -1,64 +1,39 @@
-"use client";
-import { slide as Menu } from "react-burger-menu";
-import { UserButton, SignInButton } from "@clerk/nextjs";
-import Session from "@/types/Session";
-import Link from "next/link";
+'use client';
 
-import "@/styles/burger-menu.css";
+//TODO: Fix burger menu (it doesn't show links)
+import { slide as Menu } from 'react-burger-menu';
+import { UserButton, SignInButton } from '@clerk/nextjs';
+import Session from '@/types/Session';
+import Link from 'next/link';
 
-export default function BurgerMenu({
-  sessions,
-  userId,
-}: {
+import '@/styles/burger-menu.css';
+
+
+type BurgerMenuProps = {
   sessions: Session[];
   userId: string;
-}) {
+};
+
+export default function BurgerMenu({ sessions, userId }: BurgerMenuProps) {
 
   return (
     <>
       <Menu right>
-        {sessions ? (
-          sessions.map((session) => (
-            <Link
-              key={session.id}
-              className="menu-item"
-              href={`/play/${session.id}`}
-            >
-              {session.title}
+        {sessions?.map((session) => (
+          <Link
+            key={session.id}
+            className='menu-item'
+            href={`/play/${session.id}`}
+          >
+            {session.title}
+          </Link>
+        )) ?? (
+            <Link href='/profile' className='user-name'>
+              <UserButton afterSignOutUrl='/' showName={true} />
+              {/* <span>{user?.username}</span> */}
             </Link>
-          ))
-        ) : (
-          <>
-            {!userId ? (
-              <SignInButton mode="modal">
-                <Link href="#">Sign In</Link>
-              </SignInButton>
-            ) : (
-              <Link href="/profile" className="user-name">
-                <UserButton afterSignOutUrl="/" />
-                <span>{user?.username}</span>
-              </Link>
-            )}
-          </>
         )}
       </Menu>
     </>
   );
 }
-
-//   return (
-//     <>
-//       <Menu right>
-//         <a id="home" className="menu-item" href="/">
-//           Home
-//         </a>
-//         <a id="about" className="menu-item" href="/about">
-//           About
-//         </a>
-//         <a id="play" className="menu-item" href="/play">
-//           Play
-//         </a>
-//       </Menu>
-//     </>
-//   );
-// }
