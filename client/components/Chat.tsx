@@ -1,20 +1,12 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { Message, useChat } from "ai/react";
 import Loader from "./Loader";
 
-export default function Chat({
-  msgLoading,
-  sendPrompt,
-}: {
-  msgLoading: boolean;
-  sendPrompt: any;
-}) {
+export default function Chat( {gameSessionId}: {gameSessionId: string}) {
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
     api: '/api/openai',
-
-  }
-  );
+  });
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const chatSectionRef = useRef<HTMLDivElement>(null);
@@ -39,7 +31,7 @@ export default function Chat({
 
   useEffect(() => {
     scrollToBottom();
-  }, [msgLoading]);
+  }, [isLoading]);
 
   useEffect(() => {
     scrollToBottom();
@@ -57,7 +49,7 @@ export default function Chat({
                 <p className="chat-message">{m.content}</p>
               </div>
             ))}
-            {msgLoading ? <Loader /> : null}
+            {isLoading ? <Loader /> : null}
           </div>
 
           {/* Form */}
@@ -77,7 +69,6 @@ export default function Chat({
               </button>
             </form>
           </div>
-
         </div>
       </div>
     </>

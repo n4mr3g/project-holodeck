@@ -1,14 +1,22 @@
+/* Silkscreen font */
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen&display=swap');
+
+/* Loader animation */
+@import 'loader.css';
+
+
+/* Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 /* Global variables */
 :root {
   --accent-color: #ca228c;
   --background-color: #1d1e20;
 }
 
-/* Silkscreen font */
-@import url("https://fonts.googleapis.com/css2?family=Silkscreen&display=swap");
-
-/* Loader animation */
-@import "loader.css";
 
 /* CSS reset */
 * {
@@ -30,7 +38,7 @@ body {
   margin: 0 auto;
   margin-top: 50px;
   margin-bottom: 50px;
-  font-family: "Silkscreen", sans-serif;
+  font-family: 'Silkscreen', sans-serif;
 }
 
 main {
@@ -50,7 +58,7 @@ main {
   z-index: 1;
   width: 100%;
   box-shadow: 0 1px 15px 5px black;
-  font-family: "Silkscreen", sans-serif;
+  font-family: 'Silkscreen', sans-serif;
   height: 50px;
   display: flex;
   justify-content: space-between;
@@ -136,12 +144,12 @@ form {
   background-color: #1d1e20;
 }
 
-input[type="text"],
+input[type='text'],
 button {
   border: none;
 }
 
-input[type="text"] {
+input[type='text'] {
   z-index: 1;
 
   flex: 8;
@@ -154,7 +162,7 @@ input[type="text"] {
 }
 
 .form-control {
-  font-family: "Silkscreen", sans-serif;
+  font-family: 'Silkscreen', sans-serif;
   padding: 20px;
   font-size: 1rem;
   outline: none;
@@ -168,7 +176,7 @@ input[type="text"] {
 }
 
 .btn {
-  font-family: "Silkscreen", sans-serif;
+  font-family: 'Silkscreen', sans-serif;
   flex: 1;
   background: #000000;
   color: #dadadb;
@@ -253,7 +261,7 @@ a {
   background-color: var(--accent-color);
   &:before {
     color: white;
-    content: "You say:";
+    content: 'You say:';
   }
 }
 
@@ -280,7 +288,7 @@ footer p {
   color: #000000;
   &:before {
     color: white;
-    content: "🤖";
+    content: '🤖';
   }
 }
 

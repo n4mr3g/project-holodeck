@@ -1,4 +1,5 @@
-import CardsSection from "@/app/components/CardsSection";
+import CardsSection from '../components/CardsSection';
+import { cards } from '@/content';
 
 export default function Home() {
   return (
@@ -11,15 +12,15 @@ export default function Home() {
               Let me create a virtual world for you.
             </p>
           </div>
-          <CardsSection />
+          <CardsSection cards={cards} />
         </div>
       </main>
       <footer>
         <p>
-          Created by <a
-          target="_blank"
-          href="https://github.com/n4mr3g/"
-          >Germán Piccioni</a>
+          Created by{' '}
+          <a target="_blank" href="https://github.com/n4mr3g/">
+            Germán Piccioni
+          </a>
         </p>
       </footer>
     </>

@@ -7,7 +7,7 @@ const MessageSchema = new Schema({
   },
   userId: {
     type: String,
-    required: false,
+    required: true,
   },
   author: {
     type: String,
@@ -27,20 +27,9 @@ const MessageSchema = new Schema({
   },
 }, { timestamps: true });
 
-const UserSchema = new Schema({
-  userId: {
-    type: String,
-    required: true,
-  },
-  // username: {
-  //   type: String,
-  //   required: true,
-  // },
-  messages: [MessageSchema],
-}, { timestamps: true });
 
-
+MessageSchema.index({ userId: 1, time: 1 });
 const Message = model('Message', MessageSchema);
-const User = model('User', UserSchema);
 
-module.exports = { Message, User };
+
+module.exports = Message;

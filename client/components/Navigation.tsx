@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import BurgerMenu from "./BurgerMenu";
 import { useUser, UserButton, SignInButton, useAuth } from "@clerk/nextjs";
-import "@/styles/sign-in.css";
+// import "@/styles/sign-in.css";
 
 //TODO: How to use subpages with arguments?
 interface NavLink {

@@ -1,35 +1,32 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const router = require('./router');
+const errorHandler = require('./errorHandler');
 
 const PORT = process.env.SERVER_PORT;
 const CLIENT_URL = process.env.CLIENT_URL;
 const app = express();
 
-// handling CORS
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin",
-    CLIENT_URL);
-  res.header("Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+
+// CORS
+const allowedOrigins = [CLIENT_URL];
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 // middleware
 app.use(express.json());
 app.use(router);
+app.use(errorHandler);
 
-// error handling
-app.use((err, req, res, next) => {
-  const defaultErr = {
-    log: 'Express error handler caught unknown middleware error',
-    status: 500,
-    message: { err: 'An error occurred' },
-  };
-  const errorObj = Object.assign({}, defaultErr, err);
-  console.log(errorObj.log);
-  return res.status(errorObj.status).json(errorObj.message);
-});
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);

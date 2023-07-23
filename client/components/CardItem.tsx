@@ -1,5 +1,5 @@
 import Card from "@/types/Card";
-import "@/styles/cards.css";
+// import "@/styles/cards.css";
 
 export default function CardItem({ card }: { card: Card }) {
   return (

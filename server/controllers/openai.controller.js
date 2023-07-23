@@ -88,27 +88,27 @@ async function sendAiPrompt(req, res) {
   }
 }
 
-async function saveMessage(userId, messagesArr) {
-  // Find user in database
-  User.findOneAndUpdate({ userId: userId })
-    .then((user) => {
-      // If user exists, push message to messages array
-      console.log('user', user);
-      if (user) {
-        user.messages.push(...messagesArr);
-        user.save();
-      }
-      // If user doesn't exist, create new user and push message to messages array
-      else {
-        const newUser = new User({
-          userId: userId,
-          messages: messagesArr,
-        });
-        newUser.messages.push(...messagesArr);
-        newUser.save()
-      }
-    });
-}
+// async function saveMessage(userId, messagesArr) {
+//   // Find user in database
+//   User.findOneAndUpdate({ userId: userId })
+//     .then((user) => {
+//       // If user exists, push message to messages array
+//       console.log('user', user);
+//       if (user) {
+//         user.messages.push(...messagesArr);
+//         user.save();
+//       }
+//       // If user doesn't exist, create new user and push message to messages array
+//       else {
+//         const newUser = new User({
+//           userId: userId,
+//           messages: messagesArr,
+//         });
+//         newUser.messages.push(...messagesArr);
+//         newUser.save()
+//       }
+//     });
+// }
 
 
 

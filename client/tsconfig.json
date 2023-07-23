@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "dist",
     "target": "ES2016",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
-    "baseUrl": ".",
-    "allowJs": true,
+    // "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -19,34 +20,35 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@/components/*": [
+        "./components/*"
+      ],
+      "@/types/*": [
+        "./types/*"
+      ],
+      "@/styles/*": [
+        "./styles/*"
+      ]
+    },
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/components/*": [
-        "./src/app/components/*"
-      ],
-      "@/types/*": [
-        "./src/types/*"
-      ],
-      "@/styles/*": [
-        "./src/app/styles/*"
-      ],
-    }
+    "allowJs": true
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "pages/api/route.ts",
+    "pages/api/anthropic.ts",
     "pages/api/openai.ts",
-    "./src/_app.tsx",
+    "./pages/_app.tsx"
   ],
   "exclude": [
     "node_modules"

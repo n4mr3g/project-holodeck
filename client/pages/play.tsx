@@ -1,6 +1,11 @@
-import { FieldValues, set } from "react-hook-form";
-import { useState, useEffect } from "react";
-import Message from "@/types/Message";
+'use client';
+import { FieldValues } from 'react-hook-form';
+import { useState, useEffect, use } from 'react';
+import axios from 'axios';
+import useSWR, { Fetcher } from 'swr';
+import Message from '@/types/Message';
+import SessionsSelector from '../components/SessionsSelector';
+
 import {
   SignedIn,
   SignedOut,
@@ -8,87 +13,60 @@ import {
   useAuth,
   useUser,
   SignIn,
-} from "@clerk/nextjs";
-import Chat from "@/components/Chat";
+} from '@clerk/nextjs';
+import GameSession from '@/types/GameSession';
 
+// WIP
+const fetcher = (url: string): Promise<any> => {
+  return axios.get(url).then(res => res.data);
+};
 export default function Play() {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [msgLoading, setMsgLoading] = useState(false);
-  const { isLoaded, userId, sessionId, getToken } = useAuth();
+  const [sessions, setSessions] = useState<GameSession[]>([]);
+  const [gameSessionId, setGameSessionId] = useState<string>('');
+
+  const { isLoaded, userId, getToken } = useAuth();
   const { user } = useUser();
 
-  const sortMessages = (data: Message[]) => {
-    console.log("data:", data);
-    return data.sort((a, b) =>{
-      return +a.time - +b.time;
-    });
-  };
-
-  function fetchMessages() {
+  // 1: Fetch sessions
+  function fetchSessions() {
     const requestOptions = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
     };
     if (userId) {
-      fetch(`http://localhost:3001/messages/${userId}`, requestOptions)
-        .then((data) => data.json())
-        .then((data) => sortMessages(data))
-        .then((data = []) => setMessages(data));
+      fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/sessions/${userId}`,
+        requestOptions,
+      )
+        .then(data => data.json())
+        .then((data = []) => setSessions(data))
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
+      // useSWR(`${process.env.NEXT_PUBLIC_SERVER_URL}/sessions/${userId}`, fetcher);
+      // axios
+      //   .get(`http://localhost:3001/sessions/${userId}`, requestOptions)
+      //   .then((res) => res.data)
+      //   .then((data) => setSessions(data));
     }
   }
 
-  function sendPrompt(data: FieldValues) {
-    const userMessage = new Message(data.prompt, user?.username!, user?.id!);
-    setMessages((prevMessages) => [...prevMessages, userMessage]);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        prompt: data.prompt,
-        userId: user?.id,
-        //TODO: sessions
-        // session_id: sessionId,
-      }),
-    };
-    setMsgLoading(true);
-    let botMessage: Message;
-    fetch(`http://localhost:3001/send_ai_prompt`, requestOptions)
-      .then((response) => response.json())
-      .then((response) => {
-        botMessage = new Message(
-          response.choices[0].message.content,
-          "[AI]",
-          user?.id!,
-          true,
-        );
-        console.log("Response in client: ", response);
-      })
-      .then(() => {
-        setMsgLoading(false);
-        setMessages((prevMessages) => [...prevMessages, botMessage]);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
-
   useEffect(() => {
-    fetchMessages();
+    fetchSessions();
   }, []);
 
   return (
     <div>
       <SignedIn>
-        <Chat
-          // messages={messages}
-          msgLoading={msgLoading}
-          sendPrompt={sendPrompt}
+        <SessionsSelector
+          sessions={sessions}
+          setGameSessionId={setGameSessionId}
         />
       </SignedIn>
+
       <SignedOut>
-        <RedirectToSignIn
-        // mode="modal" //does not exist?
-        />
+        <RedirectToSignIn />
       </SignedOut>
     </div>
   );

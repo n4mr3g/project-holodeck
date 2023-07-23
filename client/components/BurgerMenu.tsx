@@ -3,10 +3,10 @@
 //TODO: Fix burger menu (it doesn't show links)
 import { slide as Menu } from 'react-burger-menu';
 import { UserButton, SignInButton } from '@clerk/nextjs';
-import Session from '@/types/Session';
+import Session from '@/types/GameSession';
 import Link from 'next/link';
 
-import '@/styles/burger-menu.css';
+// import '@/styles/burger-menu.css';
 
 
 type BurgerMenuProps = {

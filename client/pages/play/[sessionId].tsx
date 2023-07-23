@@ -1,7 +1,7 @@
-import { useRouter } from 'next/router'
-import { FieldValues, set } from "react-hook-form";
-import { useState, useEffect } from "react";
-import Message from "@/types/Message";
+import { useRouter } from 'next/router';
+import { FieldValues, set } from 'react-hook-form';
+import { useState, useEffect } from 'react';
+import Message from '@/types/Message';
 import {
   SignedIn,
   SignedOut,
@@ -9,44 +9,48 @@ import {
   useAuth,
   useUser,
   SignIn,
-} from "@clerk/nextjs";
-import Chat from "@/components/Chat";
+} from '@clerk/nextjs';
+import Chat from '@/components/Chat';
 
-export default function Play() {
+export default function Play({gameSessionId} : {gameSessionId: string}) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [msgLoading, setMsgLoading] = useState(false);
-  const { isLoaded, userId, sessionId, getToken } = useAuth();
+  const { isLoaded, userId, getToken } = useAuth();
   const { user } = useUser();
 
-  const sortMessages = (data: Message[]) => {
-    console.log("data:", data);
-    return data.sort((a, b) => {
-      a.time - b.time;
-    });
-  };
+  // const sortMessages = (data: Message[]) => {
+  //   console.log("data:", data);
+  //   return data.sort((a, b) => {
+  //     a.time - b.time;
+  //   });
+  // };
 
   function fetchMessages() {
     const requestOptions = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
     };
-    if (userId)
-    {
-      fetch(`http://localhost:3001/messages/${userId}`, requestOptions)
-        .then((data) => data.json())
-        .then((data) => sortMessages(data))
-        .then((data = []) => setMessages(data));
+    if (userId && gameSessionId) {
+      {
+        fetch(
+          `http://localhost:3001/messages/${userId}/${gameSessionId}`,
+          requestOptions,
+        )
+          .then((data) => data.json())
+          // .then((data) => sortMessages(data))
+          .then((data = []) => setMessages(data));
+        // TODO: catch block
+      }
     }
   }
 
-
-
-  function sendPrompt(data: FieldValues): Promise<void> {
+  // Need to send prompt to AI AND save it to DB
+  function sendPrompt(data: FieldValues) {
     const userMessage = new Message(data.prompt, user?.username, user?.id);
     setMessages((prevMessages) => [...prevMessages, userMessage]);
     const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         prompt: data.prompt,
         userId: user?.id,
@@ -61,18 +65,18 @@ export default function Play() {
       .then((response) => {
         botMessage = new Message(
           response.choices[0].message.content,
-          "[AI]",
+          '[AI]',
           user?.id,
           true,
         );
-        console.log("Response in client: ", response);
+        console.log('Response in client: ', response);
       })
       .then(() => {
         setMsgLoading(false);
         setMessages((prevMessages) => [...prevMessages, botMessage]);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error('Error:', error);
       });
   }
 
@@ -84,13 +88,12 @@ export default function Play() {
     <div>
       <SignedIn>
         <Chat
-          messages={messages}
-          msgLoading={msgLoading}
-          sendPrompt={sendPrompt}
+        gameSessionId={gameSessionId}
+          // sendPrompt={sendPrompt}
         />
       </SignedIn>
       <SignedOut>
-        <RedirectToSignIn mode="modal" />
+        <RedirectToSignIn mode='modal' />
       </SignedOut>
     </div>
   );
