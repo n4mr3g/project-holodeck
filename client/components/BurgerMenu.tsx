@@ -6,15 +6,15 @@ import { UserButton, SignInButton } from '@clerk/nextjs';
 import Session from '@/types/GameSession';
 import Link from 'next/link';
 
-// import '@/styles/burger-menu.css';
+import '@/styles/BurgerMenu.module.css';
 
 
 type BurgerMenuProps = {
   sessions: Session[];
-  userId: string;
+  // userId: string;
 };
 
-export default function BurgerMenu({ sessions, userId }: BurgerMenuProps) {
+export default function BurgerMenu({ sessions }: BurgerMenuProps) {
 
   return (
     <>

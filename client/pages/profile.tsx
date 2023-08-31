@@ -10,7 +10,7 @@ export default function Profile() {
   return (
     <>
       <SignedIn>
-        <UserProfile path="/profile" routing="path" />
+        <UserProfile path="/profile" routing="path"/>
       </SignedIn>
 
       <SignedOut>
@@ -19,4 +19,4 @@ export default function Profile() {
     </>
   );
 }
-// 
+//

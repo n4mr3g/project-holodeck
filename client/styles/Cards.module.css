@@ -1,4 +1,4 @@
-.cards-section {
+.cardsSection {
   position: relative;
   display: flex;
   align-items: center;
@@ -11,7 +11,8 @@
   gap: 35px;
 }
 
-.cards-section .card-container {
+/* .cards-section .card-container { */
+.cardContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -19,7 +20,8 @@
   /* margin-top: 50px; */
 }
 
-.card-item {
+/* .card-item { */
+.cardItem {
   flex: 1;
   width: 70vw;
   height: 30vh;
@@ -34,6 +36,7 @@
   padding: 30px;
   /* width: max-content; */
   /* height: max-content; */
+  filter: grayscale(20%);
   border: 0.5px solid var(--accent-color);
   transition: all 0.1s ease-in;
 
@@ -44,26 +47,26 @@
   }
 }
 
-.card-item h2,
-.card-item p {
+.cardItem h2,
+.cardItem p {
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.card-item h2 {
+.cardItem h2 {
   font-size: 2rem;
   font-weight: 300;
   margin-bottom: 10px;
 }
 
-.card-item p {
+.cardItem p {
   font-size: 1.2rem;
   font-weight: 300;
   margin-bottom: 10px;
 }
 
-/*
-.card-image img {
+
+/* .cardImage img {
   width: 20vw;
   height: 100%;
   filter: blur(5px);
@@ -71,15 +74,15 @@
   object-fit: cover;
 } */
 
-.card-image img:hover {
+.cardImage img:hover {
   filter: none;
   scale: 1.1;
 }
 
-.card-image:hover,
-.card-image img:hover,
-.card-item:hover {
+.cardImage:hover,
+.cardImage img:hover,
+.cardItem:hover {
   transition: all 0.3s ease-in-out;
-  scale: 1.05;
+  scale: 1.02;
   filter: none;
 }

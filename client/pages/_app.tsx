@@ -1,22 +1,24 @@
 'use client';
 import Navigation from '@/components/Navigation';
-import { StyledEngineProvider } from '@mui/material/styles';
+// import { StyledEngineProvider } from '@mui/material/styles';
 import { ReactElement, useEffect, useState } from 'react';
 import { dark } from '@clerk/themes';
 import type { AppProps } from 'next/app';
 import React from 'react';
-import '@/styles/globals.css';
-
-/* Typing animation */
-import '@/styles/typing-demo.css';
+import type { AppType } from 'next/app';
+import { trpc } from '@/utils/trpc';
 import { ClerkProvider } from '@clerk/nextjs';
 
-export default function MyApp({
+import '@/styles/globals.css';
+/* Typing animation */
+import '@/styles/typing-demo.css';
+
+const MyApp: AppType = ({
   Component,
   pageProps,
-}: AppProps): ReactElement {
+}: AppProps) => {
   return (
-    <StyledEngineProvider injectFirst>
+    // <StyledEngineProvider injectFirst>
       <ClerkProvider
         publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
         {...pageProps}
@@ -33,6 +35,8 @@ export default function MyApp({
         />
         <Component {...pageProps} />
       </ClerkProvider>
-    </StyledEngineProvider>
+    // </StyledEngineProvider>
   );
 }
+
+export default trpc.withTRPC(MyApp);

@@ -2,9 +2,10 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import BurgerMenu from "./BurgerMenu";
+// import BurgerMenu from "./BurgerMenu";
 import { useUser, UserButton, SignInButton, useAuth } from "@clerk/nextjs";
 // import "@/styles/sign-in.css";
+import styles from "@/styles/SignIn.module.css";
 
 //TODO: How to use subpages with arguments?
 interface NavLink {
@@ -47,14 +48,14 @@ export default function Navigation({ navLinks }: NavigationProps) {
                 <Link href="#">Sign In</Link>
               </SignInButton>
             ) : (
-              <Link href="/profile" className="user-name">
+              <Link href="/profile" className={styles.userName}>
                 <UserButton afterSignOutUrl="/" />
                 <span>{user?.username}</span>
               </Link>
             )}
           </div>
         </div>
-        <BurgerMenu navLinks={navLinks} user={userId} sessions={[]} />
+        {/* <BurgerMenu sessions={[]} /> */}
       </nav>
     </>
   );

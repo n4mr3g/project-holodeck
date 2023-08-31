@@ -1,6 +1,7 @@
 import CardsSection from '../components/CardsSection';
 import { cards } from '@/content';
 
+
 export default function Home() {
   return (
     <>
