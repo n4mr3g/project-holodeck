@@ -1,11 +1,14 @@
-import { Player } from '@/lib/Player';
+import { Player } from '@/types/Player';
 import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
 export default function NewPlayerForm() {
   async function create(formData: FormData) {
     'use server';
-    const {getToken, userId} = auth();
+    const { getToken, userId } = auth();
+    if (!userId) {
+      return null; //TODO: handle error
+    }
     const name = formData.get('name')!.toString();
     const player = new Player(name, userId);
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/players/`, {
@@ -17,7 +20,6 @@ export default function NewPlayerForm() {
       throw new Error(`${res.status}: ${res.statusText}`);
     }
     redirect('/play');
-
   }
   return (
     <div>

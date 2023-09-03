@@ -1,9 +1,7 @@
 'use client';
 import PlayerDetails from '@/components/PlayerDetails';
-import { Player } from '@/lib/Player';
-import {
-  useAuth,
-} from '@clerk/nextjs';
+import { Player } from '@/types/Player';
+import { useAuth } from '@clerk/nextjs';
 
 export default function GamePage() {
   const { isLoaded, userId } = useAuth();
@@ -12,9 +10,5 @@ export default function GamePage() {
     return null;
   }
 
-
-  return (
-    <div>
-    </div>
-  );
+  return <div></div>;
 }

@@ -8,7 +8,7 @@ async function getPlayer() {
   const { getToken } = auth();
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/players/`, {
     headers: { Authorization: `Bearer ${await getToken()}` },
-  });
+  } );
   if (!res.ok) {
     //TODO: handle error
     // throw new Error(`${res.status}: ${res.statusText}`);
@@ -22,10 +22,10 @@ export default async function Play() {
     return <NewPlayerForm/>
   } else {
     return (
-      <>
+      <div className={'container mx-auto pt-7'}>
     <PlayerDetails player={player}/>
     <GameDashboard player={player} />
-      </>
+      </div>
   )
 }
 

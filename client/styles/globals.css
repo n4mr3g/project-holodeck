@@ -4,6 +4,8 @@
 /* Loader animation */
 @import 'loader.css';
 
+/* shadcn library */
+@import 'shadcn.css';
 
 /* Tailwind */
 @tailwind base;
@@ -16,7 +18,6 @@
   --accent-color: #ca228c;
   --background-color: #1d1e20;
 }
-
 
 /* CSS reset */
 * {

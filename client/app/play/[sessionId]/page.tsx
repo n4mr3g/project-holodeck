@@ -18,12 +18,6 @@ export default function Play({gameSessionId} : {gameSessionId: string}) {
   const { isLoaded, userId, getToken } = useAuth();
   const { user } = useUser();
 
-  // const sortMessages = (data: Message[]) => {
-  //   console.log("data:", data);
-  //   return data.sort((a, b) => {
-  //     a.time - b.time;
-  //   });
-  // };
 
   function fetchMessages() {
     const requestOptions = {

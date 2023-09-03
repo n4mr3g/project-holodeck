@@ -1,0 +1,14 @@
+.statRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* justify-content: space-between; */
+  margin: 10px 0px;
+  padding: 0px 10px;
+}
+
+.statValue {
+  width: 2rem;
+  text-align: center;
+
+}

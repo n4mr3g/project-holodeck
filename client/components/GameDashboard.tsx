@@ -1,10 +1,9 @@
-import { Player } from '@/lib/Player';
+import { Player } from '@/types/Player';
 
-export default function GameDashboard({player}: {player: Player}) {
+export default function GameDashboard({ player }: { player: Player }) {
   return (
     <div>
-    
-    <button>Click me</button>
+      <button>Click me</button>
     </div>
-  )
+  );
 }
