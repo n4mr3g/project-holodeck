@@ -1,15 +1,3 @@
-// interface CharStats {
-//   maxHp: number;
-//   str: number;
-//   def: number;
-//   agi: number;
-//   luck: number;
-//   lvl: number;
-//   exp: number;
-//   expToLvlUp: number;
-// }
-
-
 export const StatsTable = Object.freeze( {
   str : {
     name: 'Strength',
@@ -53,10 +41,6 @@ export class CharStat {
   }
   static getDescription(type: StatType) {
     return StatsTable[type].description;
-  }
-
-  get description() {
-    return StatsTable[this.type].description;
   }
 
   increment(value: number = 1) {

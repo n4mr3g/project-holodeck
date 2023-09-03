@@ -3,6 +3,7 @@ import { auth } from '@clerk/nextjs';
 import NewPlayerForm from '@/components/NewPlayerForm';
 import PlayerDetails from '@/components/PlayerDetails';
 import GameDashboard from '@/components/GameDashboard';
+import { Player } from '@/types/Player';
 
 async function getPlayer() {
   const { getToken } = auth();
@@ -17,7 +18,7 @@ async function getPlayer() {
   return await res.json();
 }
 export default async function Play() {
-  const player = await getPlayer();
+  const player = (await getPlayer()) as Player;
   if (!player) {
     return <NewPlayerForm/>
   } else {

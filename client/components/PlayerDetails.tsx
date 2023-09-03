@@ -1,12 +1,20 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { Player, CharStat } from '@/types/Player';
 import { CharacterStatItem } from '@/components/CharacterStatItem';
 
-function CharacterStats({ stats }: { stats: CharStat[] }) {
+function CharacterStats({ player }: { player: Player }) {
+  const [freeStatPoints, setFreeStatPoints] = useState<number>(player.freeStatPoints);
+
+
   return (
     <ul>
-      {stats.map((stat: CharStat) => (
+      {player.stats.map((stat: CharStat) => (
         <li key={stat.type}>
           <CharacterStatItem stat={stat}/>
+
+
         </li>
       ))}
     </ul>

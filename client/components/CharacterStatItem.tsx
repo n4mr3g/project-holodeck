@@ -8,15 +8,21 @@ import {
 
 import { CharStat } from '@/types/Player';
 import styles from '@/styles/CharacterStatItem.module.css';
+import { useState } from 'react';
 
 export function CharacterStatItem({ stat }: { stat: CharStat }) {
+  // const [statValue, setStatValue] = useState(stat.value);
+
+  // function handleClick() {
+  //   setStatValue(statValue + 1);
+  // }
+
   return (
     <div
       className={
         'container flex border h-10 max-w-lg items-center justify-between'
       }
     >
-      {/* <div className={'flex'}> */}
       <TooltipProvider>
         <Tooltip delayDuration={0}>
           <TooltipTrigger asChild>
@@ -29,8 +35,6 @@ export function CharacterStatItem({ stat }: { stat: CharStat }) {
       </TooltipProvider>
       <div className={'flex'}>
         <p>{stat.value}</p>
-        <button className={'btn btn-primary'}
-         onClick={() => stat.increment()}>+</button>
       </div>
     </div>
   );
