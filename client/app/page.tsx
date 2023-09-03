@@ -1,6 +1,6 @@
+'use client';
 import CardsSection from '../components/CardsSection';
 import { cards } from '@/content';
-
 
 export default function Home() {
   return (
@@ -9,9 +9,9 @@ export default function Home() {
         <div className="header-section">
           <h1>Project Holodeck</h1>
           <div className="wrapper">
-            <p className="typing-demo">
+            <span className="typing-demo">
               Let me create a virtual world for you.
-            </p>
+            </span>
           </div>
           <CardsSection cards={cards} />
         </div>

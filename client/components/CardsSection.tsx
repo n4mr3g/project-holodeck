@@ -5,7 +5,7 @@ import styles from '@/styles/Cards.module.css';
 export default function CardsSection({ cards }: { cards: Card[] }) {
   return (
     <div className={styles.cardsSection}>
-      {cards.map(card => <CardItem card={card}/> )}
+      {cards.map(card => <CardItem key={card.title} card={card}/> )}
     </div>
   );
 }

@@ -2,6 +2,7 @@ const router = require('express').Router();
 const aiController = require('./controllers/openai.controller');
 const msgsController = require('./controllers/messages.controller');
 const gameSessionsController = require('./controllers/gameSessions.controller');
+const authMiddleware = require('./middleware/auth.middleware');
 
 router.post('/send_ai_prompt', aiController.sendAiPrompt);
 

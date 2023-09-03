@@ -2,7 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const router = require('./router');
-const errorHandler = require('./errorHandler');
+const errorHandler = require('./middleware/errorHandler.middleware');
+const authMiddleware = require('./middleware/auth.middleware');
 
 const PORT = process.env.SERVER_PORT;
 const CLIENT_URL = process.env.CLIENT_URL;
@@ -23,9 +24,11 @@ app.use(cors({
 }));
 
 // middleware
-app.use(express.json());
-app.use(router);
-app.use(errorHandler);
+app
+.use(express.json())
+.use(authMiddleware)
+.use(router)
+.use(errorHandler);
 
 
 app.listen(PORT, () => {

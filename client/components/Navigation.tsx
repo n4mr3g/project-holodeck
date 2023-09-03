@@ -1,11 +1,10 @@
-"use client";
+'use client';
 
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-// import BurgerMenu from "./BurgerMenu";
-import { useUser, UserButton, SignInButton, useAuth } from "@clerk/nextjs";
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import { useUser, UserButton, SignInButton, useAuth } from '@clerk/nextjs';
 // import "@/styles/sign-in.css";
-import styles from "@/styles/SignIn.module.css";
+import styles from '@/styles/SignIn.module.css';
 
 //TODO: How to use subpages with arguments?
 interface NavLink {
@@ -27,7 +26,7 @@ export default function Navigation({ navLinks }: NavigationProps) {
       <nav>
         <div className="nav-header">
           <div className="left-links">
-            {navLinks.map((link) => {
+            {navLinks.map(link => {
               const isActive = pathname == link.href;
               // const isActive = pathname && pathname.startsWith(link.href); // for subpages
 
@@ -35,7 +34,7 @@ export default function Navigation({ navLinks }: NavigationProps) {
                 <Link
                   href={link.href}
                   key={link.name}
-                  className={isActive ? "active" : ""}
+                  className={isActive ? 'active' : ''}
                 >
                   {link.name}
                 </Link>

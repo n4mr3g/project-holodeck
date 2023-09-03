@@ -45,7 +45,7 @@ export default function Chat( {gameSessionId}: {gameSessionId: string}) {
           {/* Chat */}
           <div className="chat" ref={chatRef}>
             {messages.map((m) => (
-              <div className={`chat-bubble ${m.role}`}>
+              <div key={m.id} className={`chat-bubble ${m.role}`}>
                 <p className="chat-message">{m.content}</p>
               </div>
             ))}
