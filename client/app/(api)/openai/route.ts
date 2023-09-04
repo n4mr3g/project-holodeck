@@ -1,3 +1,5 @@
+//! This was moved from pages/api/openai.ts. Needs review.
+
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 import { Configuration, OpenAIApi } from 'openai-edge';
 
