@@ -1,25 +1,25 @@
-export const StatsTable = Object.freeze( {
-  str : {
+export const StatsTable = Object.freeze({
+  str: {
     name: 'Strength',
     description: 'Increases damage dealt.',
   },
-  def : {
+  def: {
     name: 'Defense',
     description: 'Decreases damage taken.',
   },
-  agi : {
+  agi: {
     name: 'Agility',
     description: 'Increases chance to dodge.',
   },
-  luck : {
+  luck: {
     name: 'Luck',
     description: 'Increases chance to crit.',
   },
-  cha : {
+  cha: {
     name: 'Charisma',
     description: 'Increases chance to get better deals at the shop.',
   },
-  int : {
+  int: {
     name: 'Intelligence',
     description: 'Increases chance to get better deals at the shop.',
   },
@@ -36,22 +36,21 @@ export class CharStat {
     this.type = type;
   }
 
+  public increment(value: number = 1) {
+    this.value += value;
+  }
+
+  public decrement(value: number = 1) {
+    this.value -= value;
+  }
+
   static getName(type: StatType) {
     return StatsTable[type].name;
   }
   static getDescription(type: StatType) {
     return StatsTable[type].description;
   }
-
-  increment(value: number = 1) {
-    this.value += value;
-  }
-
-  decrement(value: number = 1) {
-    this.value -= value;
-  }
 }
-
 
 export class Player {
   userId: string;
@@ -80,6 +79,16 @@ export class Player {
     ];
   }
 
+  setBulkStats(values: number[]) {
+    this.stats.forEach((stat, index) => {
+      stat.value = values[index];
+    });
+  }
+
+  getBulkStats() {
+    return this.stats.map(stat => stat.value);
+  }
+  
   takeDamage(damage: number) {
     this.currentHp -= damage;
     if (this.currentHp <= 0) {

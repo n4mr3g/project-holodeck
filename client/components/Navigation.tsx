@@ -2,9 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { useUser, UserButton, SignInButton, useAuth } from '@clerk/nextjs';
-// import "@/styles/sign-in.css";
-import styles from '@/styles/SignIn.module.css';
+import ClerkButton from './ClerkButton';
 
 //TODO: How to use subpages with arguments?
 interface NavLink {
@@ -18,8 +16,6 @@ interface NavigationProps {
 
 export default function Navigation({ navLinks }: NavigationProps) {
   const pathname = usePathname();
-  const { isLoaded, userId, sessionId, getToken } = useAuth();
-  const { isSignedIn, user } = useUser();
 
   return (
     <>
@@ -28,8 +24,6 @@ export default function Navigation({ navLinks }: NavigationProps) {
           <div className="left-links">
             {navLinks.map(link => {
               const isActive = pathname == link.href;
-              // const isActive = pathname && pathname.startsWith(link.href); // for subpages
-
               return (
                 <Link
                   href={link.href}
@@ -42,19 +36,9 @@ export default function Navigation({ navLinks }: NavigationProps) {
             })}
           </div>
           <div className="right-links">
-            {!userId ? (
-              <SignInButton mode="modal">
-                <Link href="#">Sign In</Link>
-              </SignInButton>
-            ) : (
-              <Link href="/profile" className={styles.userName}>
-                <UserButton afterSignOutUrl="/" />
-                <span>{user?.username}</span>
-              </Link>
-            )}
+            <ClerkButton />
           </div>
         </div>
-        {/* <BurgerMenu sessions={[]} /> */}
       </nav>
     </>
   );

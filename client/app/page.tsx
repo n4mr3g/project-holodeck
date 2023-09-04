@@ -1,4 +1,3 @@
-'use client';
 import CardsSection from '../components/CardsSection';
 import { cards } from '@/content';
 
@@ -25,6 +24,5 @@ export default function Home() {
         </p>
       </footer>
     </>
-    //TODO: Add cards with links to play and custom
   );
 }
