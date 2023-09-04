@@ -127,8 +127,11 @@ export class Player {
     this.checkLvlUp();
   }
 
-  increaseStat(stat: StatType, amount: number = 1) {
-    this.stats.find((s) => s.type === stat)?.increment(amount);
+  assignStatPoint(stat: CharStat, amount: number = 1) {
+    if (this.freeStatPoints < amount) {
+      return;
+    }
+    stat.increment(amount);
     this.freeStatPoints -= amount;
   }
 

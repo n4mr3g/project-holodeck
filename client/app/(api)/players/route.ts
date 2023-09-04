@@ -1,10 +1,12 @@
 import { NextResponse, NextRequest } from 'next/server';
-import clientPromise from '../../lib/mongodb';
+import clientPromise from '../../../lib/mongodb';
 import { auth } from '@clerk/nextjs';
 
+// `server-only` guarantees any modules that import code in file will never run
+//  on the client. It's good practice to add `server-only` preemptively.
+import 'server-only';
 
 const dbName = process.env.DB_NAME;
-
 
 export async function GET() {
   const { userId }: { userId: string | null } = auth();
@@ -20,7 +22,7 @@ export async function GET() {
     .findOne({ userId }, { projection: { player: 1, _id: 0 } });
 
   const player = data?.player;
-  return NextResponse.json( player );
+  return NextResponse.json(player);
 }
 
 export async function POST(req: NextRequest) {
