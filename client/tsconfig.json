@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noImplicitAny": false,
     "sourceMap": true,
     "outDir": "dist",
     "target": "ES2016",

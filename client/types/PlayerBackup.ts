@@ -27,11 +27,29 @@ export const StatsTable = Object.freeze({
 
 export type StatType = keyof typeof StatsTable;
 
-export interface CharStat {
+export class CharStat {
   type: StatType;
   value: number;
-  description: string;
-  name: string;
+
+  constructor(type: StatType, value: number) {
+    this.value = value;
+    this.type = type;
+  }
+
+  increment(value: number = 1) {
+    this.value += value;
+  }
+
+  decrement(value: number = 1) {
+    this.value -= value;
+  }
+
+  static getName(type: StatType) {
+    return StatsTable[type].name;
+  }
+  static getDescription(type: StatType) {
+    return StatsTable[type].description;
+  }
 }
 
 export class Player {
@@ -50,64 +68,24 @@ export class Player {
     this.name = name;
     this.userId = userId;
     this.stats = [
-      {
-        type: 'str',
-        value: 0,
-        description: 'Increases damage dealt.',
-        name: 'Strength',
-      },
-      {
-        type: 'def',
-        value: 0,
-        description: 'Decreases damage taken.',
-        name: 'Defense',
-      },
-      {
-        type: 'agi',
-        value: 0,
-        description: 'Increases chance to dodge.',
-        name: 'Agility',
-      },
-      {
-        type: 'luck',
-        value: 0,
-        description: 'Increases chance to crit and find better loot.',
-        name: 'Luck',
-      },
-      {
-        type: 'cha',
-        value: 0,
-        description: 'Increases persuasion and bartering.',
-        name: 'Charisma',
-      },
-      {
-        type: 'int',
-        value: 0,
-        description: 'Increases magic damage and mana.',
-        name: 'Intelligence',
-      },
+      new CharStat('str', 1),
+      new CharStat('def', 1),
+      new CharStat('agi', 1),
+      new CharStat('luck', 1),
+      new CharStat('cha', 1),
+      new CharStat('int', 1),
     ];
   }
 
-  addStr(amount: number = 1) {
-    this.stats[0].value += amount;
+  setBulkStats(values: number[]) {
+    this.stats.forEach((stat, index) => {
+      stat.value = values[index];
+    });
   }
-  addDef(amount: number = 1) {
-    this.stats[1].value += amount;
+
+  getBulkStats() {
+    return this.stats.map(stat => stat.value);
   }
-  addAgi(amount: number = 1) {
-    this.stats[2].value += amount;
-  }
-  addLuck(amount: number = 1) {
-    this.stats[3].value += amount;
-  }
-  addCha(amount: number = 1) {
-    this.stats[4].value += amount;
-  }
-  addInt(amount: number = 1) {
-    this.stats[5].value += amount;
-  }
-  
 
   takeDamage(damage: number) {
     this.currentHp -= damage;
@@ -141,13 +119,13 @@ export class Player {
     this.checkLvlUp();
   }
 
-  // assignStatPoint(stat: CharStat, amount: number = 1) {
-  //   if (this.freeStatPoints < amount) {
-  //     return;
-  //   }
-  //   stat.increment(amount);
-  //   this.freeStatPoints -= amount;
-  // }
+  assignStatPoint(stat: CharStat, amount: number = 1) {
+    if (this.freeStatPoints < amount) {
+      return;
+    }
+    stat.increment(amount);
+    this.freeStatPoints -= amount;
+  }
 
   private setExpToLvlUp(newExpToLvlUp: number) {
     this.expToLvlUp = newExpToLvlUp;

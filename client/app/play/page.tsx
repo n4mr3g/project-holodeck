@@ -20,12 +20,11 @@ async function getPlayer() {
   return await res.json();
 }
 
-
 export default async function Play() {
   const fetchedPlayer = (await getPlayer()) as Player;
   if (!fetchedPlayer) {
     return <NewPlayerForm />;
   }
 
-  return <GameDashboard fetchedPlayer={fetchedPlayer} />;
+  return <GameDashboard player={fetchedPlayer} />;
 }

@@ -11,6 +11,14 @@ export default function NewPlayerForm() {
     }
     const name = formData.get('name')!.toString();
     const player = new Player(name, userId);
+    player.addAgi(4);
+    player.addDef(4);
+    player.addStr(5);
+    player.addInt(4);
+    player.addCha(4);
+    player.addLuck(4);
+    player.setMaxHp(100);
+    player.heal();
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/players/`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${await getToken()}` },
