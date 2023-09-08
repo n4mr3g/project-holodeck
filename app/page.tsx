@@ -1,5 +1,6 @@
 import CardsSection from '../components/CardsSection';
 import { cards } from '@/content';
+import Balancer from 'react-wrap-balancer';
 
 export default function Home() {
   return (
@@ -8,9 +9,11 @@ export default function Home() {
         <div className="header-section">
           <h1>Project Holodeck</h1>
           <div className="wrapper">
-            <span className="typing-demo">
-              Let me create a virtual world for you.
-            </span>
+            <Balancer>
+              <span className="typing-demo">
+                Let me create a virtual world for you.
+              </span>
+            </Balancer>
           </div>
           <CardsSection cards={cards} />
         </div>
