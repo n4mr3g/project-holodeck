@@ -23,7 +23,9 @@ export async function GET() {
     .findOne({ userId }, { projection: { player: 1, _id: 0 } });
 
   const player = data?.player;
-  return player ? NextResponse.json(player) : new NextResponse('Not found', { status: 404 });
+  return player
+    ? NextResponse.json(player)
+    : new NextResponse('Not found', { status: 404 });
 }
 
 export async function POST(req: NextRequest) {
@@ -34,8 +36,7 @@ export async function POST(req: NextRequest) {
   // idk yet how to use this
   // const token = await getToken({template: ''})
 
-  const playerData = await req.json() as PlayerState;
-  console.log('PLAYER DATA!!!!!!!!!!', playerData);
+  const playerData = (await req.json()) as PlayerState;
   const client = await clientPromise;
   const db = client.db(dbName);
 
