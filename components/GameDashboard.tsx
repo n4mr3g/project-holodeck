@@ -1,26 +1,29 @@
 'use client';
-import { CharStat, Player } from '@/types/Player';
+import { PlayerState, Player } from '@/types/Player';
 import PlayerDetails from './PlayerDetails';
 import { usePlayerStore } from '@/store';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import Encounter from './Encounter';
+import Link from 'next/link';
 
 export default function GameDashboard({
-  player,
+  playerState,
 }: {
-  player: Player;
+  playerState: PlayerState;
 }) {
   const { updatePlayer } = usePlayerStore();
+
+  const player = useMemo(() => new Player(playerState), [playerState]);
 
   useEffect(() => {
     // 'dispatch' the player to the store
     updatePlayer(player);
-  }, [player]);
+  }, [player, updatePlayer]);
 
   return (
     <div className={'container mx-auto pt-7'}>
       <PlayerDetails />
-      <Encounter />
+      <Link href="/play/encounter"> Go to encounter </Link>
     </div>
   );
 }

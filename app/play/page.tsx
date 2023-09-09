@@ -1,12 +1,10 @@
 import { auth } from '@clerk/nextjs';
-import { usePlayerStore } from '@/store';
 
 import NewPlayerForm from '@/components/NewPlayerForm';
-import PlayerDetails from '@/components/PlayerDetails';
 import GameDashboard from '@/components/GameDashboard';
-import { CharStat, Player } from '@/types/Player';
+import { PlayerState } from '@/types/Player';
 
-async function getPlayer() {
+async function getPlayerState() {
   'use server';
   const { getToken } = auth();
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/players/`, {
@@ -17,14 +15,15 @@ async function getPlayer() {
     // throw new Error(`${res.status}: ${res.statusText}`);
     return null;
   }
+  // const playerState = (await res.json()) as PlayerState;
   return await res.json();
 }
 
 export default async function Play() {
-  const fetchedPlayer = (await getPlayer()) as Player;
-  if (!fetchedPlayer) {
+  const fetchedPlayerState = (await getPlayerState()) as PlayerState;
+  if (!fetchedPlayerState) {
     return <NewPlayerForm />;
   }
-
-  return <GameDashboard player={fetchedPlayer} />;
+  
+  return <GameDashboard playerState={fetchedPlayerState} />;
 }

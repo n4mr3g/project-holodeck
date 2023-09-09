@@ -1,39 +1,12 @@
-export class Enemy {
-  name: string;
-  currentHp: number;
-  maxHp: number;
-  isAlive: boolean;
-  lvl: number;
+import { Character } from '@/types/Character';
 
-  constructor(name: string, lvl: number) {
-    this.name = name;
-    this.lvl = lvl;
-    this.maxHp = 20 * lvl;
-    this.currentHp = this.maxHp;
-    this.isAlive = true;
-  }
 
-  takeDamage(damage: number) {
-    this.currentHp -= damage;
-    if (this.currentHp <= 0) {
-      this.isAlive = false;
-    }
-  }
+//TBD - add enemy specific stats
 
-  heal(amount: number = this.maxHp) {
-    if (amount + this.currentHp > this.maxHp) {
-      this.currentHp = this.maxHp;
-    } else {
-      this.currentHp += amount;
-    }
-  }
+export class Enemy extends Character {
 
-  setMaxHp(newHp: number) {
-    this.maxHp = newHp;
-  }
-
-  die() {
-    this.isAlive = false;
+  constructor(name: string, lvl: number = 1) {
+    super(name, lvl);
   }
 
 }

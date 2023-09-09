@@ -6,19 +6,20 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-import { CharStat } from '@/types/Player';
+// import { CharStat } from '@/types/Character';
 import { usePlayerStore } from '@/store';
 import { useEffect, useState } from 'react';
+import { StatsTable } from '@/types/Character';
 
-export function CharacterStatItem({ stat }: { stat: CharStat }) {
+export function CharacterStatItem({ type, value }: { type: string; value: number }) {
   // function increaseStat(stat: CharStat) {
   //   player.assignStatPoint(stat, 1);
   //   updatePlayer(player);
   // }
 
-  useEffect(() => {
-    console.log('statattat', stat);
-  }, []);
+  // useEffect(() => {
+    // console.log('statattat', stat);
+  // }, []);
 
   return (
     <div
@@ -32,14 +33,14 @@ export function CharacterStatItem({ stat }: { stat: CharStat }) {
         <TooltipProvider>
           <Tooltip delayDuration={0}>
             <TooltipTrigger asChild>
-              <p> {stat.name} </p>
+              <p> {StatsTable[type].name} </p>
             </TooltipTrigger>
             <TooltipContent side={'left'} sideOffset={45}>
-              <p className="p-0 m-0">{stat.description}</p>
+              <p className="p-0 m-0">{StatsTable[type].description}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        <span>{stat.value}</span>
+        <span>{value}</span>
       </div>
     </div>
   );

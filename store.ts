@@ -1,8 +1,10 @@
 import { create } from 'zustand';
-import { CharStat, Player, StatType } from './types/Player';
+import { Player, PlayerState } from './types/Player';
+import { Character, StatType } from './types/Character';
 
 interface State {
   player: Player;
+  enemy: Character;
   // stats: CharStat[];
   // previousState: Player;
   // isAddingStatPoints: boolean;
@@ -10,102 +12,36 @@ interface State {
   // restoreStatPoints: () => void;
   // addStatPoint: (statType: StatType) => void;
   // removeStatPoint: (statType: StatType) => void;
+  attack(attacker: Character, target: Character): void;
   updatePlayer: (updatedPlayer: Player) => void;
-  addStr: (amount: number) => void;
-  addDef: (amount: number) => void;
-  addAgi: (amount: number) => void;
-  addLuck: (amount: number) => void;
-  addCha: (amount: number) => void;
-  addInt: (amount: number) => void;
+  updatePlayerState: (updatedState: PlayerState) => void;
+  updateEnemy: (updatedEnemy: Character) => void;
+  addStat: (stat: StatType, amount: number) => void;
 }
-
-// interface StatsState {
-//   stats: CharStat[];
-//   assignStatPoint: (stat: CharStat, amount: number) => void;
-// }
-
-// interface FreeStatPointsState {
-//   freeStatPoints: number;
-//   decrease: (amount: number) => void;
-//   setValue: (amount: number) => void;
-// }
 
 export const usePlayerStore = create<State>()(set => ({
   player: new Player('', ''),
-  addAgi: (amount: number) => {
+  enemy: new Character(''),
+  attack: (attacker, target) => {
     set(state => {
-      state.player.addAgi(amount);
+      attacker.attack(target);
+      return { player: state.player, enemy: state.enemy };
+    });
+  },
+  updateEnemy: (updatedEnemy: Character) =>
+    set(state => ({ enemy: updatedEnemy })),
+  addStat: (stat: StatType, amount: number) => {
+    set(state => {
+      state.player.addStat(stat, amount);
       return { player: state.player };
     });
   },
-  addCha: (amount: number) => {
-    set(state => {
-      state.player.addCha(amount);
-      return { player: state.player };
-    });
-  },
-  addDef: (amount: number) => {
-    set(state => {
-      state.player.addDef(amount);
-      return { player: state.player };
-    });
-  },
-  addInt: (amount: number) => {
-    set(state => {
-      state.player.addInt(amount);
-      return { player: state.player };
-    });
-  },
-  addLuck: (amount: number) => {
-    set(state => {
-      state.player.addLuck(amount);
-      return { player: state.player };
-    });
-  },
-  addStr: (amount: number) => {
-    set(state => {
-      state.player.addStr(amount);
-      return { player: state.player };
-    });
-  },
-
-
   updatePlayer: (updatedPlayer: Player) =>
     set(state => ({ player: updatedPlayer })),
+
+  updatePlayerState: (updatedState: PlayerState) =>
+    set(state => {
+      state.player.setState(updatedState);
+      return { player: state.player };
+    }),
 }));
-
-// export const useStatsStore = create<StatsState>()(set => ({
-//   stats: usePlayerStore.getState().player.stats,
-//   assignStatPoint: (stat: CharStat, amount: number = 1) => {
-//     set(state => {
-//       if (usePlayerStore.getState().player.freeStatPoints < amount) {
-//         return state;
-//       }
-//       stat.increment(amount);
-//       usePlayerStore.getState().player.freeStatPoints -= amount;
-//       return { stats: state.stats };
-//     });
-//   },
-// }));
-
-// export const useFreeStatPointsStore = create<FreeStatPointsState>()(set => ({
-//   freeStatPoints: usePlayerStore.getState().player.freeStatPoints,
-
-//   setValue: (value: number) => {
-//     set(state => {
-//       usePlayerStore.getState().player.freeStatPoints += value;
-//       return { freeStatPoints: state.freeStatPoints };
-//     });
-//   },
-
-//   decrease: (amount: number) => {
-//     set(state => {
-//       if (usePlayerStore.getState().player.freeStatPoints < amount) {
-//         return state;
-//       }
-//       usePlayerStore.getState().player.freeStatPoints -= amount;
-
-//       return { freeStatPoints: state.freeStatPoints };
-//     });
-//   },
-// }));

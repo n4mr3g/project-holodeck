@@ -7,7 +7,6 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { ClerkProvider } from '@clerk/nextjs';
 import Navigation from '@/components/Navigation';
 
-// import '@/styles/globals.css';
 import '@/styles/typing-demo.css'; // Typing animation
 
 export const metadata: Metadata = {
@@ -37,7 +36,6 @@ export default function RootLayout({
                 { name: 'Home', href: '/' },
                 { name: 'About', href: '/about' },
                 { name: 'Play', href: '/play' },
-                { name: 'Play2', href: '/play2' },
               ]}
             />
             {children}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Player, CharStat } from '@/types/Player';
+import { Player } from '@/types/Player';
 import { CharacterStatItem } from '@/components/CharacterStatItem';
 import { usePlayerStore } from '@/store';
 
@@ -16,9 +16,9 @@ function CharacterStats() {
       }
     >
       <ul className={'flex flex-col min-w-full'}>
-        {player.stats.map((stat: CharStat) => (
-          <li key={stat.type}>
-            <CharacterStatItem stat={stat} />
+        {Object.entries(player.stats).map(([key, value]) => (
+          <li key={key}>
+            <CharacterStatItem type={key} value={value} />
           </li>
         ))}
       </ul>
@@ -27,13 +27,12 @@ function CharacterStats() {
 }
 
 export default function PlayerDetails() {
-  const { player, updatePlayer, addAgi, addDef, addStr } = usePlayerStore();
+  const { player, updatePlayer, addStat } = usePlayerStore();
 
   useEffect(() => {
-    // addStr(4);
-    // addAgi(4);
+    addStat('str', 5);
     updatePlayer(player);
-  }, []);
+  }, [player, updatePlayer]);
 
   return (
     <>

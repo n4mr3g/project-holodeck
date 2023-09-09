@@ -27,88 +27,99 @@ export const StatsTable = Object.freeze({
 
 export type StatType = keyof typeof StatsTable;
 
-export interface CharStat {
-  type: StatType;
-  value: number;
-  description: string;
-  name: string;
+export interface CharStats {
+  str: number;
+  def: number;
+  agi: number;
+  luck: number;
+  cha: number;
+  int: number;
 }
 
-
-export class Character {
+export interface CharacterState {
   name: string;
-  currentHp: number = 0;
-  maxHp: number = 0;
+  lvl: number;
+  currentHp: number;
+  maxHp: number;
+  isAlive: boolean;
+  stats: CharStats;
+}
+
+const defaultState = Object.freeze({
+  name: '',
+  lvl: 1,
+  currentHp: 100,
+  maxHp: 100,
+  isAlive: true,
+  stats: {
+    str: 1,
+    def: 1,
+    agi: 1,
+    luck: 1,
+    cha: 1,
+    int: 1,
+  },
+});
+
+export class Character implements CharacterState {
+  static defaultState = defaultState;
+  name: string;
+  lvl: number;
+  currentHp: number;
   isAlive: boolean = true;
-  lvl: number = 1;
-  stats: CharStat[];
+  maxHp: number;
+  stats: CharStats;
 
-  constructor(name: string) {
-    this.name = name;
-    this.stats = [
-      {
-        type: 'str',
-        value: 0,
-        description: 'Increases damage dealt.',
-        name: 'Strength',
-      },
-      {
-        type: 'def',
-        value: 0,
-        description: 'Decreases damage taken.',
-        name: 'Defense',
-      },
-      {
-        type: 'agi',
-        value: 0,
-        description: 'Increases chance to dodge.',
-        name: 'Agility',
-      },
-      {
-        type: 'luck',
-        value: 0,
-        description: 'Increases chance to crit and find better loot.',
-        name: 'Luck',
-      },
-      {
-        type: 'cha',
-        value: 0,
-        description: 'Increases persuasion and bartering.',
-        name: 'Charisma',
-      },
-      {
-        type: 'int',
-        value: 0,
-        description: 'Increases magic damage and mana.',
-        name: 'Intelligence',
-      },
-    ];
+  constructor(nameOrState: string | CharacterState, lvl?: number) {
+    if (typeof nameOrState === 'string') {
+      this.setState(Object.getPrototypeOf(this).constructor.defaultState);
+      this.name = nameOrState;
+      this.lvl = lvl || 1;
+    } else {
+      this.setState(nameOrState);
+    }
   }
 
-  addStr(amount: number = 1) {
-    this.stats[0].value += amount;
-  }
-  addDef(amount: number = 1) {
-    this.stats[1].value += amount;
-  }
-  addAgi(amount: number = 1) {
-    this.stats[2].value += amount;
-  }
-  addLuck(amount: number = 1) {
-    this.stats[3].value += amount;
-  }
-  addCha(amount: number = 1) {
-    this.stats[4].value += amount;
-  }
-  addInt(amount: number = 1) {
-    this.stats[5].value += amount;
+  getState(): CharacterState {
+    return {
+      name: this.name,
+      lvl: this.lvl,
+      currentHp: this.currentHp,
+      maxHp: this.maxHp,
+      isAlive: this.isAlive,
+      stats: this.stats,
+    };
   }
 
-  attack(target: Character,
-    ) {
+  setState(state: CharacterState) {
+    this.name = state.name;
+    this.lvl = state.lvl;
+    this.currentHp = state.currentHp;
+    this.maxHp = state.maxHp;
+    this.isAlive = state.isAlive;
+    this.stats = {
+      str: state.stats.str,
+      def: state.stats.def,
+      agi: state.stats.agi,
+      luck: state.stats.luck,
+      cha: state.stats.cha,
+      int: state.stats.int,
+    };
+  }
+
+  addStat(stat: StatType, amount: number = 1) {
+    this.stats[stat] += amount;
+  }
+
+  attack(target: Character) {
     console.log(`${this.name} attacks ${target.name}!`);
-    target.takeDamage(this.stats[0].value);
-    console.log(`${target.name} takes ${this.stats[0].value} damage!`);
+    let damage =
+      Math.ceil(Math.random() * 5) +
+      Math.ceil(this.stats['str'] / target.stats['def']);
+    target.takeDamage(damage);
+    console.log(`${target.name} takes ${damage} damage!`);
+    console.log(`${target.name} has ${target.currentHp} hp left!`);
+    return this;
   }
 
   takeDamage(damage: number) {
@@ -133,5 +144,4 @@ export class Character {
     }
     this.currentHp += amount;
   }
-
 }

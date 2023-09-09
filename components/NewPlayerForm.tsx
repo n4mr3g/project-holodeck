@@ -3,6 +3,7 @@ import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
 export default function NewPlayerForm() {
+
   async function create(formData: FormData) {
     'use server';
     const { getToken, userId } = auth();
@@ -10,25 +11,21 @@ export default function NewPlayerForm() {
       return null; //TODO: handle error
     }
     const name = formData.get('name')!.toString();
+    console.log('name', name);
+    console.log('userId', userId);
     const player = new Player(name, userId);
-    player.addAgi(4);
-    player.addDef(4);
-    player.addStr(5);
-    player.addInt(4);
-    player.addCha(4);
-    player.addLuck(4);
-    player.setMaxHp(100);
-    player.heal();
+    const playerState = player.getState();
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/players/`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${await getToken()}` },
-      body: JSON.stringify(player),
+      body: JSON.stringify(playerState),
     });
     if (!res.ok) {
       throw new Error(`${res.status}: ${res.statusText}`);
     }
     redirect('/play');
   }
+
   return (
     <div>
       <form action={create}>

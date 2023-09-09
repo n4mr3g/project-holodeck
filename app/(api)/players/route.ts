@@ -5,6 +5,7 @@ import { auth } from '@clerk/nextjs';
 // `server-only` guarantees any modules that import code in file will never run
 //  on the client. It's good practice to add `server-only` preemptively.
 import 'server-only';
+import { PlayerState } from '@/types/Player';
 
 const dbName = process.env.DB_NAME;
 
@@ -22,7 +23,7 @@ export async function GET() {
     .findOne({ userId }, { projection: { player: 1, _id: 0 } });
 
   const player = data?.player;
-  return NextResponse.json(player);
+  return player ? NextResponse.json(player) : new NextResponse('Not found', { status: 404 });
 }
 
 export async function POST(req: NextRequest) {
@@ -33,7 +34,8 @@ export async function POST(req: NextRequest) {
   // idk yet how to use this
   // const token = await getToken({template: ''})
 
-  const playerData = await req.json();
+  const playerData = await req.json() as PlayerState;
+  console.log('PLAYER DATA!!!!!!!!!!', playerData);
   const client = await clientPromise;
   const db = client.db(dbName);
 
