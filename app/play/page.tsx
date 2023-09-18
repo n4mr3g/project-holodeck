@@ -24,6 +24,6 @@ export default async function Play() {
   if (!fetchedPlayerState) {
     return <NewPlayerForm />;
   }
-  
+
   return <GameDashboard playerState={fetchedPlayerState} />;
 }

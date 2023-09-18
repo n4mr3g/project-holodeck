@@ -18,8 +18,8 @@ export default function SessionsSelector({
   const sessions = data?.sessions ?? [];
 
   return (
-    <div className="sessions-selector h-56 flex flex-col text-center content-center">
-      <h1 className="sessions-selector-title text-4xl mt-1 mb-6">
+    <div className="sessions-selector flex h-56 flex-col content-center text-center">
+      <h1 className="sessions-selector-title mb-6 mt-1 text-4xl">
         Select a session
       </h1>
       <ul className="sessions-selector-list">

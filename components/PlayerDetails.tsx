@@ -12,10 +12,10 @@ function CharacterStats() {
   return (
     <div
       className={
-        'justify-center max-w-lg container flex flex-col items-center border p-2 box-border'
+        'container box-border flex max-w-lg flex-col items-center justify-center border p-2'
       }
     >
-      <ul className={'flex flex-col min-w-full'}>
+      <ul className={'flex min-w-full flex-col'}>
         {Object.entries(player.stats).map(([key, value]) => (
           <li key={key}>
             <CharacterStatItem type={key} value={value} />
@@ -32,7 +32,7 @@ export default function PlayerDetails() {
   useEffect(() => {
     addStat('str', 5);
     updatePlayer(player);
-  }, [player, updatePlayer]);
+  }, [player, updatePlayer, addStat]);
 
   return (
     <>

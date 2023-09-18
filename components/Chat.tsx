@@ -1,12 +1,13 @@
-"use client";
-import React, { useRef, useEffect } from "react";
-import { Message, useChat } from "ai/react";
-import Loader from "./Loader";
+'use client';
+import React, { useRef, useEffect } from 'react';
+import { Message, useChat } from 'ai/react';
+import Loader from './Loader';
 
-export default function Chat( {gameSessionId}: {gameSessionId: string}) {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    api: '/api/openai',
-  });
+export default function Chat({ gameSessionId }: { gameSessionId: string }) {
+  const { messages, input, handleInputChange, handleSubmit, isLoading } =
+    useChat({
+      api: '/api/openai',
+    });
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const chatSectionRef = useRef<HTMLDivElement>(null);
@@ -41,10 +42,9 @@ export default function Chat( {gameSessionId}: {gameSessionId: string}) {
     <>
       <div className="chat-container" ref={chatContainerRef}>
         <div className="chat-section" ref={chatSectionRef}>
-
           {/* Chat */}
           <div className="chat" ref={chatRef}>
-            {messages.map((m) => (
+            {messages.map(m => (
               <div key={m.id} className={`chat-bubble ${m.role}`}>
                 <p className="chat-message">{m.content}</p>
               </div>

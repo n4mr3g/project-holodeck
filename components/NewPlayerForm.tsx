@@ -3,7 +3,6 @@ import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
 export default function NewPlayerForm() {
-
   async function create(formData: FormData) {
     'use server';
     const { getToken, userId } = auth();

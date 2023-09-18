@@ -10,7 +10,13 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 
-export default function Alert ({accept, text} : {accept: () => void, text: string}) {
+export default function Alert({
+  accept,
+  text,
+}: {
+  accept: () => void;
+  text: string;
+}) {
   return (
     <AlertDialog>
       <AlertDialogTrigger>{text}</AlertDialogTrigger>
@@ -23,9 +29,9 @@ export default function Alert ({accept, text} : {accept: () => void, text: strin
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => accept} >Apply</AlertDialogAction>
+          <AlertDialogAction onClick={() => accept}>Apply</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );
-};
+}

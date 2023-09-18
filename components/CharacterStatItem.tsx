@@ -11,24 +11,30 @@ import { usePlayerStore } from '@/store';
 import { useEffect, useState } from 'react';
 import { StatsTable } from '@/types/Character';
 
-export function CharacterStatItem({ type, value }: { type: string; value: number }) {
+export function CharacterStatItem({
+  type,
+  value,
+}: {
+  type: string;
+  value: number;
+}) {
   // function increaseStat(stat: CharStat) {
   //   player.assignStatPoint(stat, 1);
   //   updatePlayer(player);
   // }
 
   // useEffect(() => {
-    // console.log('statattat', stat);
+  // console.log('statattat', stat);
   // }, []);
 
   return (
     <div
       className={
-        'container min-w-l flex items-center border p-2 box-border justify-center'
+        'min-w-l container box-border flex items-center justify-center border p-2'
       }
     >
       <div
-        className={'container flex border h-10 items-center justify-between'}
+        className={'container flex h-10 items-center justify-between border'}
       >
         <TooltipProvider>
           <Tooltip delayDuration={0}>
@@ -36,7 +42,7 @@ export function CharacterStatItem({ type, value }: { type: string; value: number
               <p> {StatsTable[type].name} </p>
             </TooltipTrigger>
             <TooltipContent side={'left'} sideOffset={45}>
-              <p className="p-0 m-0">{StatsTable[type].description}</p>
+              <p className="m-0 p-0">{StatsTable[type].description}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>

@@ -1,4 +1,4 @@
-import Message from "@/types/Message";
+import Message from '@/types/Message';
 
 export default class GameSession {
   id: string;
@@ -12,7 +12,7 @@ export default class GameSession {
     this.userId = userId;
     this.time = new Date();
     this.messages = [];
-    this.title = "New Game";
+    this.title = 'New Game';
   }
 
   setTitle(title: string) {
@@ -22,5 +22,4 @@ export default class GameSession {
   addMessages(messages: Message[]) {
     this.messages = this.messages.concat(messages);
   }
-
 }

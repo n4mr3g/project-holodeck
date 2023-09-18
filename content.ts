@@ -21,5 +21,3 @@ export const cards = [
     link: '/play',
   },
 ];
-
-

@@ -9,10 +9,10 @@ export default function About() {
           combination of artificial intelligence and human creativity.
         </p>
         <p>
-          This is my solo project for the{" "}
+          This is my solo project for the{' '}
           <a href="https://codeworks.me/" target="_blank">
             Codeworks
-          </a>{" "}
+          </a>{' '}
           bootcamp for full-stack software engineering. I built it using NextJS,
           TypeScript, Node.js, Express, and MongoDB.
         </p>
@@ -25,21 +25,21 @@ export default function About() {
 
         <p>
           I hope you enjoy it. If you have any questions, comments, or
-          suggestions, feel free to{" "}
+          suggestions, feel free to{' '}
           <a href="mailto:german.n.piccioni@gmail.com">send me an email</a>.
         </p>
         <p>
-          You can also check out{" "}
+          You can also check out{' '}
           <a href="https://github.com/n4mr3g" target="_blank">
             my GitHub
-          </a>{" "}
-          or{" "}
+          </a>{' '}
+          or{' '}
           <a
             href="https://www.linkedin.com/in/german-piccioni/"
             target="_blank"
           >
             my LinkedIn
-          </a>{" "}
+          </a>{' '}
           profiles.
         </p>
       </div>

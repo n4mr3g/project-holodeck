@@ -11,11 +11,13 @@ function CharacterStats() {
   return (
     <div
       className={
-        'justify-center max-w-lg container flex flex-col items-center border p-2 box-border'
+        'container box-border flex max-w-lg flex-col items-center justify-center border p-2'
       }
     >
-      <h1>You have <span>{player.freeStatPoints}</span> points to assign</h1>
-      <ul className={'flex flex-col min-w-full'}>
+      <h1>
+        You have <span>{player.freeStatPoints}</span> points to assign
+      </h1>
+      <ul className={'flex min-w-full flex-col'}>
         {player.stats.map((stat: CharStat) => (
           <li key={stat.type}>
             <CharacterStatItem stat={stat} />
@@ -44,7 +46,6 @@ export default function AssignStatPointsMenu() {
   // }, []);
 
   function resetStats() {
-
     player.setBulkStats(initialPlayerStats);
     player.freeStatPoints = initialFreePoints;
     console.log('initial free points:', initialFreePoints);
@@ -78,7 +79,7 @@ export default function AssignStatPointsMenu() {
         <CharacterStats />
         <div
           className={
-            'container flex items-center max-w-xs border p-2 box-border justify-evenly'
+            'container box-border flex max-w-xs items-center justify-evenly border p-2'
           }
         >
           <button onClick={() => resetStats()}>Reset</button>
