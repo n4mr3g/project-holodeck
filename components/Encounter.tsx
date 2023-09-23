@@ -5,24 +5,13 @@ import { use, useEffect } from 'react';
 export default function Encounter() {
   const { player, enemy, updateEnemy, updatePlayer, attack } = usePlayerStore();
 
-  // if (!enemy.isAlive) {
-  //   updateEnemy(new Character('Troll', 2));
-  // }
   useEffect(() => {
-    // if (!enemy.isAlive) {
     updateEnemy(new Character('Troll', 2));
-    // }
+    //TODO: fetch enemy from server; if enemy died, show a modal with loot
   }, [updateEnemy]);
 
-  useEffect(() => {
-    if (!enemy.isAlive) updateEnemy(new Character('Goblin', 1));
-  }, [enemy.isAlive, updateEnemy]);
-
-  // useEffect(() => {
-  //   updateEnemy(new Character(enemy.getState()));
-  // }, [enemy.currentHp, updateEnemy]);
-
   function handleCombat() {
+    //TODO: this should be a server call
     attack(player, enemy);
     if (!enemy.isAlive) {
       console.log(`${player.name} killed ${enemy.name}!`);
@@ -37,6 +26,7 @@ export default function Encounter() {
       }
     }
   }
+
   return (
     <>
       <div className={'container mx-auto pt-7'}>

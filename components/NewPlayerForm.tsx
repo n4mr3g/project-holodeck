@@ -14,11 +14,14 @@ export default function NewPlayerForm() {
     console.log('userId', userId);
     const player = new Player(name, userId);
     const playerState = player.getState();
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/players/`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${await getToken()}` },
-      body: JSON.stringify(playerState),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/players/`,
+      {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${await getToken()}` },
+        body: JSON.stringify(playerState),
+      },
+    );
     if (!res.ok) {
       throw new Error(`${res.status}: ${res.statusText}`);
     }
