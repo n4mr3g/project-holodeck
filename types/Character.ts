@@ -119,7 +119,7 @@ export class Character implements CharacterState {
     target.takeDamage(damage);
     console.log(`${target.name} takes ${damage} damage!`);
     console.log(`${target.name} has ${target.currentHp} hp left!`);
-    return this;
+    return damage;
   }
 
   takeDamage(damage: number) {
