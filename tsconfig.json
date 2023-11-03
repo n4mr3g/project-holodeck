@@ -43,6 +43,12 @@
       "@/server/*": [
         "./server/*"
       ],
+      "@/lib/*": [
+        "./lib/*"
+      ],
+      "@/controllers/*": [
+        "./lib/controllers/*"
+      ],
     },
     "plugins": [
       {
