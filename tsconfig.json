@@ -49,6 +49,9 @@
       "@/controllers/*": [
         "./lib/controllers/*"
       ],
+      "@/api/*": [
+        "./app/api/*"
+      ],
     },
     "plugins": [
       {
@@ -63,7 +66,7 @@
     ".next/types/**/*.ts",
     "pages/api/anthropic.ts",
     "pages/api/openai.ts",
-    "./pages/_app.tsx"
+    "./pages/_app.tsx",
   ],
   "exclude": [
     "node_modules"
