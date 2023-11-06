@@ -1,6 +1,8 @@
+'use client';
+
 import { usePlayerStore } from '@/store';
 import { Character } from '@/types/Character';
-import { use, useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default function Encounter() {
   const { player, enemy, updateEnemy, updatePlayer, attack } = usePlayerStore();
