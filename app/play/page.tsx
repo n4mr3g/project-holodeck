@@ -7,16 +7,25 @@ import { PlayerState } from '@/types/Player';
 async function getPlayerState() {
   'use server';
   const { getToken } = auth();
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/players/`, {
-    headers: { Authorization: `Bearer ${await getToken()}` },
-  });
+
+  const token = await getToken();
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/players/`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    },
+  );
+
   if (!res.ok) {
     //TODO: handle error
     // throw new Error(`${res.status}: ${res.statusText}`);
     return null;
   }
-  // const playerState = (await res.json()) as PlayerState;
-  return await res.json();
+
+  const playerState = (await res.json()) as PlayerState;
+
+  return playerState;
 }
 
 export default async function Play() {
