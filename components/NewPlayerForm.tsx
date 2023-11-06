@@ -12,16 +12,23 @@ export default function NewPlayerForm() {
     const name = formData.get('name')!.toString();
     console.log('name', name);
     console.log('userId', userId);
+
+    console.log('Getting token...');
+    const token = await getToken().finally(() => console.log('Got token'));
+
     const player = new Player(name, userId);
+
     const playerState = player.getState();
+
+    console.log('Posting player...');
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/players/`,
       {
         method: 'POST',
-        headers: { Authorization: `Bearer ${await getToken()}` },
+        headers: { Authorization: `Bearer ${token}` },
         body: JSON.stringify(playerState),
       },
-    );
+    ).finally(() => console.log('Posted player'));
     if (!res.ok) {
       throw new Error(`${res.status}: ${res.statusText}`);
     }
