@@ -3,16 +3,19 @@ import { Player, PlayerState } from '@/types/Player';
 
 const dbName = process.env.DB_NAME;
 
-export async function getPlayer(userId: string): Promise<Player> {
-  console.log('awaiting clientPromise');
+export async function getPlayerIfExists(userId: string): Promise<Player> {
   const db = (await clientPromise).db(dbName);
 
-  console.log('awaiting data');
   const data = await db
     .collection('players')
-    .findOne({ userId }, { projection: { player: 1, _id: 0 } });
+    .findOne({ userId }, { projection: { playerState: 1, _id: 0 } });
 
-  const player = new Player(data?.player, userId);
+  if (!data) {
+    console.log('Player not found in DB.');
+    return null as unknown as Player;
+  }
+
+  const player = new Player(data.playerState, userId);
   return player;
 }
 
@@ -20,13 +23,28 @@ export async function createPlayer(
   userId: string,
   playerState: PlayerState,
 ): Promise<Player> {
-  const db = (await clientPromise).db(dbName);
+  try {
+    const db = (await clientPromise).db(dbName);
 
-  const result = await db
-    .collection('players')
-    .findOneAndUpdate({ userId }, { $set: { playerState } }, { upsert: true });
+    const data = await getPlayerIfExists(userId);
 
-  return new Player(result!.player, userId);
+    if (data) {
+      console.log('data:', data);
+      return data;
+    }
+
+    //TODO: validate playerState before saving it to the database
+    const newPlayerState = (await db
+      .collection('players')
+      .insertOne({ userId, playerState })) as unknown as PlayerState;
+
+    const ret = new Player(newPlayerState, userId);
+    return ret;
+  } catch (error) {
+    console.log(error);
+  }
+
+  return new Player(playerState, userId);
 }
 
 // this is an alias / duplicate of createPlayer, for now.
@@ -35,4 +53,18 @@ export async function updatePlayerState(
   playerState: PlayerState,
 ): Promise<Player> {
   return await createPlayer(userId, playerState);
+}
+
+export async function checkPlayerConsistency(
+  userId: string,
+  playerState: PlayerState,
+): Promise<Player> {
+  const playerInDb = await getPlayerIfExists(userId);
+
+  if (playerState !== playerInDb.getState()) {
+    console.log('Player state is inconsistent with DB.');
+    console.log('Player state:', playerState);
+    console.log('Player in DB:', playerInDb);
+  }
+  return playerInDb;
 }
