@@ -3,17 +3,14 @@ import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
 export default function NewPlayerForm() {
-  async function create(formData: FormData) {
-    'use server';
+  async function submit(formData: FormData) {
+    // 'use server';
     const { getToken, userId } = auth();
     if (!userId) {
       return null; //TODO: handle error
     }
     const name = formData.get('name')!.toString();
-    console.log('name', name);
-    console.log('userId', userId);
 
-    console.log('Getting token...');
     const token = await getToken().finally(() => console.log('Got token'));
 
     const player = new Player(name, userId);
@@ -37,7 +34,7 @@ export default function NewPlayerForm() {
 
   return (
     <div>
-      <form action={create}>
+      <form action={submit}>
         <input
           type="text"
           name="name"

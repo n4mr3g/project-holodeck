@@ -1,33 +1,25 @@
 'use client';
 
 import { usePlayerStore } from '@/store';
-import { Character } from '@/types/Character';
-import { useEffect } from 'react';
+import { Player } from '@/types/Player';
+import { Enemy } from '@/types/Enemy';
+import { use, useEffect, useState } from 'react';
+import { getEnemy } from '@/controllers/encounter.controller';
+import { resolveCombat } from '@/lib/game-logic/resolve-combat';
+import { CombatState } from '@/types/CombatState';
 
-export default function Encounter() {
-  const { player, enemy, updateEnemy, updatePlayer, attack } = usePlayerStore();
+export default function Encounter({
+  combatState,
+}: {
+  combatState: CombatState;
+}) {
+  const [player, setPlayer] = useState<Player>(combatState.player);
+  const [enemy, setEnemy] = useState<Enemy>(combatState.enemy);
 
   useEffect(() => {
-    updateEnemy(new Character('Troll', 2));
-    //TODO: fetch enemy from server; if enemy died, show a modal with loot
-  }, [updateEnemy]);
-
-  function handleCombat() {
-    //TODO: this should be a server call
-    attack(player, enemy);
-    if (!enemy.isAlive) {
-      console.log(`${player.name} killed ${enemy.name}!`);
-      player.gainExp(enemy.lvl * 10);
-      updatePlayer(player);
-    } else if (player.isAlive) {
-      attack(enemy, player);
-      if (!player.isAlive) {
-        console.log(`${enemy.name} killed ${player.name}!`);
-      } else {
-        attack(enemy, player);
-      }
-    }
-  }
+    setPlayer(combatState.player);
+    setEnemy(combatState.enemy);
+  }, [combatState]);
 
   return (
     <>
@@ -39,17 +31,6 @@ export default function Encounter() {
           <p>
             A {enemy.name} appears! It has {enemy.currentHp} / {enemy.maxHp} HP.
           </p>
-        </div>
-        <div className={'flex flex-row'}>
-          <button
-            onClick={() => {
-              handleCombat();
-            }}
-          >
-            Attack
-          </button>
-
-          <p></p>
         </div>
       </div>
     </>

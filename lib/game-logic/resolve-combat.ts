@@ -1,37 +1,30 @@
 import { Player, PlayerState } from '@/types/Player';
 import { Enemy } from '@/types/Enemy';
 import { attackEnemy } from '@/lib/controllers/combat.controller';
-import { getEncounter } from '@/controllers/encounter.controller';
+import { getCombatState, getEnemy } from '@/controllers/encounter.controller';
 import clientPromise from '@/lib/mongodb';
-import { getPlayer } from '@/controllers/player.controller';
+import { getPlayerIfExists } from '@/controllers/player.controller';
+import { CombatState } from '@/types/CombatState';
+import { auth } from '@clerk/nextjs';
 
 const dbName = process.env.DB_NAME;
 
-//TODO:(maybe) define an interface 'CombatResult' that is the return type of resolveCombat.
-
-export type CombatResult = {
-  player: Player;
-  enemy: Enemy;
-  playerDamage: number;
-  enemyDamage: number;
-  playerIsDead: boolean;
-  enemyIsDead: boolean;
-};
-
 export async function resolveCombat(
-  userId: string,
   action: string,
   itemOrMagicId?: string | null,
-): Promise<PlayerState> {
+): Promise<CombatState> {
+  'use server';
   try {
-    const db = (await clientPromise).db(dbName);
+    const { userId } = auth();
+    if (!userId) throw new Error('User not logged in.');
 
-    const player = await getPlayer(userId);
-    const enemy = await getEncounter(userId);
+    const player = await getPlayerIfExists(userId);
+    // const enemy = await getEnemy(player);
+    const combatState = await getCombatState(userId);
 
     switch (action) {
       case 'attack':
-        return attackEnemy(player, enemy);
+        return attackEnemy(combatState);
       // case 'useItem':
       //   return useItem(player, enemy, itemOrMagicId);
       // case 'runAway':

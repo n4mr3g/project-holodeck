@@ -1,18 +1,46 @@
-'use client';
-
 import Encounter from '@/components/Encounter';
-import { usePlayerStore } from '@/store';
+import { resolveCombat } from '@/lib/game-logic/resolve-combat';
+
 import CombatResults from './combat-results';
+import { auth } from '@clerk/nextjs';
+import { Enemy } from '@/types/Enemy';
+import {
+  getCombatState,
+  getEnemy,
+} from '@/lib/controllers/encounter.controller';
+import { getPlayerIfExists } from '@/lib/controllers/player.controller';
+import { Player } from '@/types/Player';
+import { CombatState } from '@/types/CombatState';
 
-export default function Page() {
-  const { player, enemy } = usePlayerStore();
+export default async function Page() {
+  const { userId } = auth();
 
-  if (!player.isAlive || !enemy.isAlive) {
+  if (!userId) {
+    console.log('No user found');
+    return null;
+  }
+
+  const player = await getPlayerIfExists(userId);
+  const combatState: CombatState = await getCombatState(userId);
+
+  if (
+    combatState.status === 'enemyDefeated' ||
+    combatState.status === 'playerDefeated'
+  ) {
     return <CombatResults />;
   }
   return (
     <>
-      <Encounter />
+      <Encounter combatState={combatState} />
+      <div className={'flex flex-row'}>
+        <button
+          onClick={() => {
+            resolveCombat('attack');
+          }}
+        >
+          Attack
+        </button>
+      </div>
     </>
   );
 }

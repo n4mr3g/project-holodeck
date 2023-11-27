@@ -5,7 +5,10 @@ import 'server-only';
 import { NextResponse, NextRequest } from 'next/server';
 import { auth } from '@clerk/nextjs';
 import { PlayerState } from '@/types/Player';
-import { getPlayer, createPlayer } from '@/controllers/player.controller';
+import {
+  getPlayerIfExists,
+  createPlayer,
+} from '@/controllers/player.controller';
 
 export async function GET() {
   try {
@@ -14,7 +17,7 @@ export async function GET() {
       return new Response('Unauthorized', { status: 401 });
     }
 
-    const player = await getPlayer(userId);
+    const player = await getPlayerIfExists(userId);
 
     return NextResponse.json(player);
   } catch (error) {
